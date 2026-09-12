@@ -1,4 +1,6 @@
 .root {
+  display: flex;
+  flex-direction: column;
   min-height: 100%;
   background: var(--bg);
   color: var(--fg);
