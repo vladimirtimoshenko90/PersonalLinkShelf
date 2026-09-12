@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "**/dist": true,
+    "**/release": true,
+    "**/node_modules": true
+  }
+}
