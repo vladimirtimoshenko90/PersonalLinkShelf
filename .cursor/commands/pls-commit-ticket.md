@@ -13,5 +13,5 @@ Commit the current working tree. If those changes belong to a Jira ticket, mark 
    - Ticket: `[PLS-<n>] <Jira summary>` (Jira summary as the subject; square brackets around the key).
    - No ticket: one imperative sentence, no `feat:` / `fix:` prefix (same as `Hide dist, release, and node_modules from VS Code explorer`).
    Do not amend. Do not `--no-verify`.
-5. If this commit was for a ticket, transition that issue to **Done**.
-6. Run `git status` after the commit. Tell the user the commit subject, whether Jira was closed, and if `master` is ahead of `origin` (do not push).
+5. If this commit was for a ticket, transition that issue to **Done**. Then walk up: for each parent, if every child of that parent is Done, mark the parent **Done**; stop when a parent still has an open child or there is no parent.
+6. Run `git status` after the commit. Tell the user the commit subject, which Jira issues were closed (ticket and any parents), and if `master` is ahead of `origin` (do not push).
