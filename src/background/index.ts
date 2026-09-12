@@ -1,1 +1,1 @@
-void chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
+void chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });

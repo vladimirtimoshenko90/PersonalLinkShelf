@@ -1,5 +1,5 @@
-import { defineManifest } from '@crxjs/vite-plugin'
-import pkg from './package.json'
+import { defineManifest } from '@crxjs/vite-plugin';
+import pkg from './package.json';
 
 export default defineManifest({
   manifest_version: 3,
@@ -20,11 +20,7 @@ export default defineManifest({
       128: 'public/icons/icon-128.png',
     },
   },
-  permissions: [
-    'sidePanel',
-    'storage',
-    'tabs',
-  ],
+  permissions: ['sidePanel', 'storage', 'tabs'],
   background: {
     service_worker: 'src/background/index.ts',
     type: 'module',
@@ -32,4 +28,4 @@ export default defineManifest({
   side_panel: {
     default_path: 'src/sidepanel/index.html',
   },
-})
+});
