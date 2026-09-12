@@ -1,0 +1,20 @@
+@use './tokens';
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

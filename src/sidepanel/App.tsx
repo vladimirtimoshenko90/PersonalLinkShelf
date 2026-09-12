@@ -1,3 +1,5 @@
+import styles from './App.module.scss';
+
 export default function App() {
-  return null;
+  return <div className={styles.root} />;
 }
