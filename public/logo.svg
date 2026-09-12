@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#2D7D6F" role="img" aria-label="Personal Link Shelf">
+  <!-- Quiet shelf: three catalog boards standing on a single plank. Reads at 16px. -->
+  <rect x="3.2" y="7" width="5" height="10.2" rx="1.15"/>
+  <rect x="9.5" y="4.2" width="5" height="13" rx="1.15"/>
+  <rect x="15.8" y="8.6" width="5" height="8.6" rx="1.15"/>
+  <rect x="2" y="18.15" width="20" height="2.35" rx="1.15"/>
+</svg>
