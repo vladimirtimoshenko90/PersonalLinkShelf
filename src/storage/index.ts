@@ -2,6 +2,19 @@ import type { ShelfBlob } from '@/types'
 
 export const STORAGE_KEY = 'pls'
 
+const SCHEME = /^[a-zA-Z][a-zA-Z0-9+.-]*:/
+
+export function normalizeUrl(url: string | null): string | null {
+  if (url === null) {
+    return null
+  }
+  const trimmed = url.trim()
+  if (trimmed === '' || SCHEME.test(trimmed)) {
+    return trimmed
+  }
+  return `https://${trimmed}`
+}
+
 export function emptyShelfBlob(): ShelfBlob {
   return {
     schemaVersion: 1,
@@ -20,7 +33,14 @@ export async function getShelfBlob(): Promise<ShelfBlob> {
 }
 
 export async function setShelfBlob(blob: ShelfBlob): Promise<void> {
-  await chrome.storage.local.set({ [STORAGE_KEY]: blob })
+  const next: ShelfBlob = {
+    ...blob,
+    resources: blob.resources.map((resource) => ({
+      ...resource,
+      url: normalizeUrl(resource.url),
+    })),
+  }
+  await chrome.storage.local.set({ [STORAGE_KEY]: next })
 }
 
 export async function deleteCatalog(catalogId: string): Promise<ShelfBlob> {
