@@ -1,0 +1,10 @@
+---
+description: Match repo Prettier and sort-imports so agent writes and editor save produce the same file
+alwaysApply: true
+---
+
+# Format and import order
+
+Follow `.prettierrc` (2-space indent, single quotes, `printWidth` 100).
+
+Sort imports with the `eslint` style (`amatiasq.sort-imports`): side-effect imports first, then by import kind, then alphabetically. Match that order when adding imports.
