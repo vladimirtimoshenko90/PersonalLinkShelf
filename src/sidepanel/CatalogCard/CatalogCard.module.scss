@@ -1,0 +1,66 @@
+.card {
+  margin: 0 10px 8px;
+  border: var(--hairline) solid var(--stroke);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  padding: 4px 4px 4px 2px;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding: 4px;
+  color: var(--fg);
+  font-size: var(--fs-title);
+  font-weight: var(--fw-title);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.count {
+  flex-shrink: 0;
+  padding: 0 4px;
+  color: var(--muted);
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums;
+}
+
+.ico {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    background var(--motion) ease,
+    opacity var(--motion) ease;
+}
+
+.ico:hover:not(:disabled) {
+  background: var(--hover);
+}
+
+.ico:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+}
+
+.ico:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
