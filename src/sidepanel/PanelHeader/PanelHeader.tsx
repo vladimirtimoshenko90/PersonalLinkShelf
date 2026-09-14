@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { useKeyPress } from '@/hooks/useKeyPress';
 import type { CatalogKind } from '@/types';
 import styles from './PanelHeader.module.scss';
 
@@ -7,31 +9,8 @@ export default function PanelHeader({ onPickKind }: { onPickKind: (kind: Catalog
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    function onPointerDown(event: PointerEvent) {
-      if (wrapRef.current?.contains(event.target as Node)) {
-        return;
-      }
-      setOpen(false);
-    }
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        setOpen(false);
-      }
-    }
-
-    document.addEventListener('pointerdown', onPointerDown);
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown);
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, [open]);
+  useClickOutside(wrapRef, () => setOpen(false));
+  useKeyPress(document, 'Escape', () => setOpen(false));
 
   function pick(kind: CatalogKind) {
     onPickKind(kind);

@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useRef, useState } from 'react';
 
+import { useAutoFocus } from '@/hooks/useAutoFocus';
+import { useKeyPress } from '@/hooks/useKeyPress';
 import { shelfStore } from '@/store';
 import type { CatalogKind } from '@/types';
 import styles from './CatalogDraft.module.scss';
@@ -7,25 +9,19 @@ import styles from './CatalogDraft.module.scss';
 export default function CatalogDraft({ kind, onDone }: { kind: CatalogKind; onDone: () => void }) {
   const [name, setName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  useAutoFocus(inputRef);
 
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
+  useKeyPress(inputRef, 'Escape', (event) => {
+    event.preventDefault();
+    onDone();
+  });
 
-  function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      onDone();
-      return;
-    }
-    if (event.key !== 'Enter') {
-      return;
-    }
+  useKeyPress(inputRef, 'Enter', (event) => {
     event.preventDefault();
     if (shelfStore.createCatalog(kind, name)) {
       onDone();
     }
-  }
+  });
 
   return (
     <input
@@ -35,7 +31,6 @@ export default function CatalogDraft({ kind, onDone }: { kind: CatalogKind; onDo
       placeholder={kind === 'project' ? 'Project name' : 'Topic name'}
       value={name}
       onChange={(event) => setName(event.target.value)}
-      onKeyDown={onKeyDown}
     />
   );
 }
