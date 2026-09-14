@@ -1,5 +1,5 @@
 import type { CatalogKind, ResourceCatalog, ShelfBlob, WebResource } from '@/types';
-import { STORAGE_KEY, emptyShelfBlob, getShelfBlob, setShelfBlob } from '@/storage';
+import { database } from '@/database';
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 
 function blobSnapshot(catalogs: ResourceCatalog[], resources: WebResource[]): string {
@@ -37,29 +37,12 @@ export class ShelfStore {
       this.started = true;
     });
 
-    const blob = await getShelfBlob();
+    const blob = await database.get();
     runInAction(() => {
       this.applyBlob(blob);
     });
     runInAction(() => {
       this.persistEnabled = true;
-    });
-
-    chrome.storage.onChanged.addListener((changes, areaName) => {
-      if (areaName !== 'local') {
-        return;
-      }
-      const change = changes[STORAGE_KEY];
-      if (change === undefined) {
-        return;
-      }
-      runInAction(() => {
-        this.persistEnabled = false;
-        this.applyBlob((change.newValue as ShelfBlob | undefined) ?? emptyShelfBlob());
-      });
-      runInAction(() => {
-        this.persistEnabled = true;
-      });
     });
   }
 
@@ -87,7 +70,7 @@ export class ShelfStore {
   }
 
   private async persist(): Promise<void> {
-    await setShelfBlob({
+    await database.set({
       schemaVersion: 1,
       catalogs: this.catalogs,
       resources: this.resources,
