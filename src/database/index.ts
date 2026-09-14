@@ -25,7 +25,8 @@ export class Database {
 
   async set(blob: ShelfBlob): Promise<void> {
     const next: ShelfBlob = {
-      ...blob,
+      schemaVersion: 1,
+      catalogs: blob.catalogs.map((catalog) => ({ ...catalog })),
       resources: blob.resources.map((resource) => ({
         ...resource,
         url: this.normalizeUrl(resource.url),
