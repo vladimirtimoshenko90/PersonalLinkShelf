@@ -1,45 +1,19 @@
-$bg: #faf8f5;
-$hover: #f1eee8;
-$accent: #2d7d6f;
-$fg: #1e1e1e;
-$muted: #6b6b6b;
-$danger: #c45c4a;
-$stroke: #e4e0d8;
-$on-accent: #ffffff;
-
-$font:
-  system-ui,
-  'Segoe UI',
-  'SF Pro Text',
-  -apple-system,
-  sans-serif;
-
-$fs-title: 14px;
-$fw-title: 600;
-$fs-body: 13px;
-$fw-body: 400;
-$fs-meta: 12px;
-
-$radius: 8px;
-$hairline: 1px;
-$motion: 150ms;
-
 :root {
-  --bg: #{$bg};
-  --hover: #{$hover};
-  --accent: #{$accent};
-  --fg: #{$fg};
-  --muted: #{$muted};
-  --danger: #{$danger};
-  --stroke: #{$stroke};
-  --on-accent: #{$on-accent};
-  --font: #{$font};
-  --fs-title: #{$fs-title};
-  --fw-title: #{$fw-title};
-  --fs-body: #{$fs-body};
-  --fw-body: #{$fw-body};
-  --fs-meta: #{$fs-meta};
-  --radius: #{$radius};
-  --hairline: #{$hairline};
-  --motion: #{$motion};
+  --bg: #faf8f5;
+  --hover: #f1eee8;
+  --accent: #2d7d6f;
+  --fg: #1e1e1e;
+  --muted: #6b6b6b;
+  --danger: #c45c4a;
+  --stroke: #e4e0d8;
+  --on-accent: #ffffff;
+  --font: system-ui, 'Segoe UI', 'SF Pro Text', -apple-system, sans-serif;
+  --fs-title: 14px;
+  --fw-title: 600;
+  --fs-body: 13px;
+  --fw-body: 400;
+  --fs-meta: 12px;
+  --radius: 8px;
+  --hairline: 1px;
+  --motion: 150ms;
 }

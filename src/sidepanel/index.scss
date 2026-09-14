@@ -13,6 +13,13 @@ html {
   font-family: var(--font);
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+}
+
 *,
 *::before,
 *::after {

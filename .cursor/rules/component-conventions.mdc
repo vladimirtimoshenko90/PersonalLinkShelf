@@ -8,7 +8,9 @@ alwaysApply: true
 
 Applies to every UI surface (side panel, popup, options, pages).
 
-**Names.** Two or three PascalCase words (`PanelBody`, `CatalogCard`). Four only if shorter is unclear. Exception: `App`. Folder name matches the component.
+**Names.** Two or three PascalCase words (`PanelBody`, `CatalogCard`). Four only if shorter is unclear. Folder name matches the component.
+
+**App.** Exception: `App` lives next to `main.tsx`. No folder. No stylesheet. It only composes the tree.
 
 **No ARIA.** Do not add `aria-*` or `role`. Keep `type="button"` and `disabled`.
 
