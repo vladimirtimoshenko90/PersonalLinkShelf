@@ -1,4 +1,4 @@
-import type { ResourceCatalog, ShelfBlob, WebResource } from '@/types';
+import type { CatalogKind, ResourceCatalog, ShelfBlob, WebResource } from '@/types';
 import { STORAGE_KEY, emptyShelfBlob, getShelfBlob, setShelfBlob } from '@/storage';
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 
@@ -62,6 +62,25 @@ export class ShelfStore {
         this.persistEnabled = true;
       });
     });
+  }
+
+  createCatalog(kind: CatalogKind, name: string): boolean {
+    const trimmed = name.trim();
+    if (trimmed === '') {
+      return false;
+    }
+
+    const ofKind = this.catalogs.filter((catalog) => catalog.kind === kind);
+    const order = ofKind.reduce((max, catalog) => Math.max(max, catalog.order), -1) + 1;
+    this.catalogs.push({
+      id: crypto.randomUUID(),
+      name: trimmed,
+      kind,
+      order,
+      collapsed: false,
+      createdAt: Date.now(),
+    });
+    return true;
   }
 
   private applyBlob(blob: ShelfBlob): void {

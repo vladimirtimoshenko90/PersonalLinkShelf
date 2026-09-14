@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
+import type { CatalogKind } from '@/types';
 import styles from './PanelHeader.module.scss';
 
-export default function PanelHeader() {
+export default function PanelHeader({ onPickKind }: { onPickKind: (kind: CatalogKind) => void }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -32,6 +33,11 @@ export default function PanelHeader() {
     };
   }, [open]);
 
+  function pick(kind: CatalogKind) {
+    onPickKind(kind);
+    setOpen(false);
+  }
+
   return (
     <header className={styles.root}>
       <h1 className={styles.name}>Personal Link Shelf</h1>
@@ -45,10 +51,10 @@ export default function PanelHeader() {
         </button>
         {open ? (
           <div className={styles.menu}>
-            <button type="button" onClick={() => setOpen(false)}>
+            <button type="button" onClick={() => pick('topic')}>
               Topic
             </button>
-            <button type="button" onClick={() => setOpen(false)}>
+            <button type="button" onClick={() => pick('project')}>
               Project
             </button>
           </div>
