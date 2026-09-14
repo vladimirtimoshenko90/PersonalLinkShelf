@@ -63,10 +63,10 @@ export class ShelfStore {
     });
   }
 
-  createCatalog(kind: CatalogKind, name: string): boolean {
+  createCatalog(kind: CatalogKind, name: string): void {
     const trimmed = name.trim();
     if (trimmed === '') {
-      return false;
+      throw new Error('Catalog name is required');
     }
 
     const ofKind = this.catalogs.filter((catalog) => catalog.kind === kind);
@@ -79,7 +79,6 @@ export class ShelfStore {
       collapsed: false,
       createdAt: Date.now(),
     });
-    return true;
   }
 
   private applyBlob(blob: ShelfBlob): void {

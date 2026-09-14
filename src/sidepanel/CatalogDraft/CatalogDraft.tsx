@@ -18,9 +18,11 @@ export default function CatalogDraft({ kind, onDone }: { kind: CatalogKind; onDo
 
   useKeyPress(inputRef, 'Enter', (event) => {
     event.preventDefault();
-    if (shelfStore.createCatalog(kind, name)) {
-      onDone();
+    const trimmed = name.trim();
+    if (trimmed !== '') {
+      shelfStore.createCatalog(kind, trimmed);
     }
+    onDone();
   });
 
   return (
