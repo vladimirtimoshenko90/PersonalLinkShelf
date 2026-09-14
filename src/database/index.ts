@@ -1,4 +1,6 @@
-import type { ShelfBlob } from '@/types';
+import type { ShelfBlob } from './entities';
+
+export type { CatalogKind, ResourceCatalog, ShelfBlob, WebResource } from './entities';
 
 const KEY = 'pls';
 const SCHEME = /^[a-zA-Z][a-zA-Z0-9+.-]*:/;

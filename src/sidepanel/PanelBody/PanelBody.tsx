@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 
 import { shelfStore } from '@/store';
-import type { CatalogKind, ResourceCatalog } from '@/types';
+import type { CatalogKind, ResourceCatalog } from '@/database';
 import CatalogCard from '../CatalogCard/CatalogCard.tsx';
 import styles from './PanelBody.module.scss';
 

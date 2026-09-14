@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useKeyPress } from '@/hooks/useKeyPress';
-import type { CatalogKind } from '@/types';
+import type { CatalogKind } from '@/database';
 import styles from './PanelHeader.module.scss';
 
 export default function PanelHeader({ onPickKind }: { onPickKind: (kind: CatalogKind) => void }) {

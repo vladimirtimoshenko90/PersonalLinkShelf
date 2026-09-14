@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { useAutoFocus } from '@/hooks/useAutoFocus';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { shelfStore } from '@/store';
-import type { CatalogKind } from '@/types';
+import type { CatalogKind } from '@/database';
 import styles from './CatalogDraft.module.scss';
 
 export default function CatalogDraft({ kind, onDone }: { kind: CatalogKind; onDone: () => void }) {

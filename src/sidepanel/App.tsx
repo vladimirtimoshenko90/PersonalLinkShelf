@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import type { CatalogKind } from '@/types';
+import type { CatalogKind } from '@/database';
 import CatalogDraft from './CatalogDraft/CatalogDraft.tsx';
 import PanelBody from './PanelBody/PanelBody.tsx';
 import PanelHeader from './PanelHeader/PanelHeader.tsx';

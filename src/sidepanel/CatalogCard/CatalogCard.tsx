@@ -8,7 +8,7 @@ import {
 import { observer } from 'mobx-react-lite';
 
 import { shelfStore } from '@/store';
-import type { ResourceCatalog } from '@/types';
+import type { ResourceCatalog } from '@/database';
 import styles from './CatalogCard.module.scss';
 
 export default observer(function CatalogCard({ catalog }: { catalog: ResourceCatalog }) {

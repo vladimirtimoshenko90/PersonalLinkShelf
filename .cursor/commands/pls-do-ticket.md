@@ -9,7 +9,7 @@ Workflow:
 1. Open the ticket in Jira (Atlassian MCP). Read the full description. Read linked Confluence pages if the ticket points at them.
 2. Transition the ticket to **In Progress**.
 3. If anything in the ticket is ambiguous, ask and wait. If it is clear, implement without waiting.
-4. Change only what the ticket requires. Do not steal work from later tickets. Stick to the CRXJS layout (`manifest.config.ts` at repo root, `src/sidepanel`, `src/background`, `src/store`, `src/database`, `src/types`).
+4. Change only what the ticket requires. Do not steal work from later tickets. Stick to the CRXJS layout (`manifest.config.ts` at repo root, `src/sidepanel`, `src/background`, `src/store`, `src/database`).
 5. Verify with `npm run build` (and the smallest check that matches the ticket).
 6. Do **not** create a git commit unless the user explicitly asks. Do **not** mark the ticket Done unless the user asks.
 

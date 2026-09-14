@@ -1,4 +1,4 @@
-import type { CatalogKind, ResourceCatalog, ShelfBlob, WebResource } from '@/types';
+import type { CatalogKind, ResourceCatalog, ShelfBlob, WebResource } from '@/database';
 import { database } from '@/database';
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 
