@@ -7,9 +7,5 @@ export default observer(function SaveNotice() {
     return null;
   }
 
-  return (
-    <p className={styles.notice} role="status">
-      Couldn't save.
-    </p>
-  );
+  return <p className={styles.root}>Couldn't save.</p>;
 });

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import styles from './Header.module.scss';
+import styles from './PanelHeader.module.scss';
 
-export default function Header() {
+export default function PanelHeader() {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -33,24 +33,22 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className={styles.header}>
+    <header className={styles.root}>
       <h1 className={styles.name}>Personal Link Shelf</h1>
       <div ref={wrapRef} className={styles.newWrap}>
         <button
           type="button"
           className={styles.newButton}
-          aria-expanded={open}
-          aria-haspopup="menu"
           onClick={() => setOpen((value) => !value)}
         >
           + New
         </button>
         {open ? (
-          <div className={styles.menu} role="menu">
-            <button type="button" role="menuitem" onClick={() => setOpen(false)}>
+          <div className={styles.menu}>
+            <button type="button" onClick={() => setOpen(false)}>
               Topic
             </button>
-            <button type="button" role="menuitem" onClick={() => setOpen(false)}>
+            <button type="button" onClick={() => setOpen(false)}>
               Project
             </button>
           </div>

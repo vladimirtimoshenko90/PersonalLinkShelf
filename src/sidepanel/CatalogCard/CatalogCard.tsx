@@ -5,10 +5,10 @@ import {
   GripVertical,
   MoreHorizontal,
 } from 'lucide-react';
-
-import type { ResourceCatalog } from '@/types';
 import { observer } from 'mobx-react-lite';
+
 import { shelfStore } from '@/store';
+import type { ResourceCatalog } from '@/types';
 import styles from './CatalogCard.module.scss';
 
 export default observer(function CatalogCard({ catalog }: { catalog: ResourceCatalog }) {
@@ -19,30 +19,21 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
   const Chevron = catalog.collapsed ? ChevronRight : ChevronDown;
 
   return (
-    <article className={styles.card}>
+    <article className={styles.root}>
       <div className={styles.head}>
-        <button type="button" className={styles.ico} aria-label="Reorder">
-          <GripVertical size={16} aria-hidden="true" />
+        <button type="button" className={styles.ico}>
+          <GripVertical size={16} />
         </button>
         <span className={styles.name}>{catalog.name}</span>
         <span className={styles.count}>{count}</span>
-        <button
-          type="button"
-          className={styles.ico}
-          aria-label={catalog.collapsed ? 'Expand' : 'Collapse'}
-        >
-          <Chevron size={16} aria-hidden="true" />
+        <button type="button" className={styles.ico}>
+          <Chevron size={16} />
         </button>
-        <button
-          type="button"
-          className={styles.ico}
-          aria-label="Open all"
-          disabled={openAllDisabled}
-        >
-          <ExternalLink size={16} aria-hidden="true" />
+        <button type="button" className={styles.ico} disabled={openAllDisabled}>
+          <ExternalLink size={16} />
         </button>
-        <button type="button" className={styles.ico} aria-label="More">
-          <MoreHorizontal size={16} aria-hidden="true" />
+        <button type="button" className={styles.ico}>
+          <MoreHorizontal size={16} />
         </button>
       </div>
     </article>
