@@ -9,7 +9,6 @@ function blobSnapshot(catalogs: ResourceCatalog[], resources: WebResource[]): st
 export class ShelfStore {
   catalogs: ResourceCatalog[] = [];
   resources: WebResource[] = [];
-  saveFailed = false;
 
   private started = false;
   private persistEnabled = false;
@@ -89,21 +88,11 @@ export class ShelfStore {
   }
 
   private async persist(): Promise<void> {
-    const blob: ShelfBlob = {
+    await setShelfBlob({
       schemaVersion: 1,
       catalogs: this.catalogs,
       resources: this.resources,
-    };
-    try {
-      await setShelfBlob(blob);
-      runInAction(() => {
-        this.saveFailed = false;
-      });
-    } catch {
-      runInAction(() => {
-        this.saveFailed = true;
-      });
-    }
+    });
   }
 }
 

@@ -1,9 +1,9 @@
-import CatalogDraft from './CatalogDraft/CatalogDraft.tsx';
+import { useState } from 'react';
+
 import type { CatalogKind } from '@/types';
+import CatalogDraft from './CatalogDraft/CatalogDraft.tsx';
 import PanelBody from './PanelBody/PanelBody.tsx';
 import PanelHeader from './PanelHeader/PanelHeader.tsx';
-import SaveNotice from './SaveNotice/SaveNotice.tsx';
-import { useState } from 'react';
 
 export default function App() {
   const [draftKind, setDraftKind] = useState<CatalogKind | null>(null);
@@ -11,10 +11,9 @@ export default function App() {
   return (
     <>
       <PanelHeader onPickKind={setDraftKind} />
-      {draftKind && (
+      {draftKind ? (
         <CatalogDraft key={draftKind} kind={draftKind} onDone={() => setDraftKind(null)} />
-      )}
-      <SaveNotice />
+      ) : null}
       <PanelBody />
     </>
   );
