@@ -6,15 +6,17 @@ import styles from './ResourceRow.module.scss';
 export default function ResourceRow({ resource }: { resource: WebResource }) {
   const title = resource.title?.trim() ?? '';
   const url = resource.url?.trim() ?? '';
-  const label = title !== '' ? title : url;
-  const urlAsLabel = title === '' && url !== '';
 
   return (
     <div className={styles.root}>
       <button type="button" className={styles.ico}>
         <GripVertical size={16} />
       </button>
-      <span className={urlAsLabel ? `${styles.label} ${styles.url}` : styles.label}>{label}</span>
+      <span className={styles.copy}>
+        {title !== '' ? <span className={styles.title}>{title}</span> : null}
+        {title !== '' && url !== '' ? <span className={styles.sep}>·</span> : null}
+        {url !== '' ? <span className={styles.url}>{url}</span> : null}
+      </span>
       {url !== '' ? (
         <span className={styles.mark}>
           <Link size={16} />

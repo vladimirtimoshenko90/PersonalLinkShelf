@@ -34,20 +34,46 @@
     }
   }
 
-  .label {
+  .copy {
+    display: flex;
     flex: 1;
+    align-items: baseline;
+    gap: 6px;
     min-width: 0;
     overflow: hidden;
     padding: 0 4px;
-    color: var(--fg);
-    font-size: var(--fs-body);
-    font-weight: var(--fw-body);
-    white-space: nowrap;
-    text-overflow: ellipsis;
 
-    &.url {
+    .title {
+      flex: 0 1 auto;
+      max-width: 58%;
+      min-width: 0;
+      overflow: hidden;
+      color: var(--fg);
+      font-size: var(--fs-body);
+      font-weight: var(--fw-body);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      &:only-child {
+        flex: 1;
+        max-width: none;
+      }
+    }
+
+    .sep {
+      flex-shrink: 0;
       color: var(--muted);
       font-size: var(--fs-meta);
+    }
+
+    .url {
+      flex: 1 1 0;
+      min-width: 0;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: var(--fs-meta);
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 
