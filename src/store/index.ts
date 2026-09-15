@@ -1,6 +1,7 @@
 import type { CatalogKind, ResourceCatalog, ShelfBlob, WebResource } from '@/database';
-import { database } from '@/database';
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
+
+import { database } from '@/database';
 
 function blobSnapshot(catalogs: ResourceCatalog[], resources: WebResource[]): string {
   return JSON.stringify({ catalogs, resources });
@@ -76,6 +77,11 @@ export class ShelfStore {
     }
 
     catalog.name = trimmed;
+  }
+
+  deleteCatalog(id: string): void {
+    this.catalogs = this.catalogs.filter((catalog) => catalog.id !== id);
+    this.resources = this.resources.filter((resource) => resource.catalogId !== id);
   }
 
   private applyBlob(blob: ShelfBlob): void {

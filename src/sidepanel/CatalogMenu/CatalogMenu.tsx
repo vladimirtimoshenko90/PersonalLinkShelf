@@ -5,7 +5,13 @@ import styles from './CatalogMenu.module.scss';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useKeyPress } from '@/hooks/useKeyPress';
 
-export default function CatalogMenu({ onRename }: { onRename: () => void }) {
+export default function CatalogMenu({
+  onRename,
+  onDelete,
+}: {
+  onRename: () => void;
+  onDelete: () => void;
+}) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -21,14 +27,23 @@ export default function CatalogMenu({ onRename }: { onRename: () => void }) {
         <div className={styles.menu}>
           <button
             type="button"
-            onClick={() => {
+            onClick={(event) => {
+              event.stopPropagation();
               setOpen(false);
               onRename();
             }}
           >
             Rename
           </button>
-          <button type="button" className={styles.delete} onClick={() => setOpen(false)}>
+          <button
+            type="button"
+            className={styles.delete}
+            onClick={(event) => {
+              event.stopPropagation();
+              setOpen(false);
+              onDelete();
+            }}
+          >
             Delete
           </button>
         </div>
