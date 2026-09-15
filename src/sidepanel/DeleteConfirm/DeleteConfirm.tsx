@@ -1,18 +1,21 @@
+import type { ResourceCatalog } from '@/database';
+import { observer } from 'mobx-react-lite';
+import { shelfStore } from '@/store';
 import styles from './DeleteConfirm.module.scss';
 
-export default function DeleteConfirm({
-  name,
-  count,
+export default observer(function DeleteConfirm({
+  catalog,
   onCancel,
   onConfirm,
 }: {
-  name: string;
-  count: number;
+  catalog: ResourceCatalog;
   onCancel: () => void;
   onConfirm: () => void;
 }) {
+  const count = shelfStore.resources.filter((resource) => resource.catalogId === catalog.id).length;
   const resources = count === 1 ? '1 resource' : `${count} resources`;
-  const question = count === 0 ? `Delete ${name}?` : `Delete ${name} and ${resources}?`;
+  const question =
+    count === 0 ? `Delete ${catalog.name}?` : `Delete ${catalog.name} and ${resources}?`;
 
   return (
     <div className={styles.root}>
@@ -27,4 +30,4 @@ export default function DeleteConfirm({
       </div>
     </div>
   );
-}
+});

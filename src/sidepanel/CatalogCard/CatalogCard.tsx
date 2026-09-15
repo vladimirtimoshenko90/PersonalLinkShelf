@@ -54,8 +54,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
 
       {deleting ? (
         <DeleteConfirm
-          name={catalog.name}
-          count={count}
+          catalog={catalog}
           onCancel={() => setDeleting(false)}
           onConfirm={() => {
             shelfStore.deleteCatalog(catalog.id);
