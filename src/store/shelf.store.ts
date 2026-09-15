@@ -60,7 +60,7 @@ export class ShelfStore {
       name: trimmed,
       kind,
       order,
-      collapsed: false,
+      collapsed: true,
       createdAt: Date.now(),
     });
   }
@@ -82,6 +82,15 @@ export class ShelfStore {
   deleteCatalog(id: string): void {
     this.catalogs = this.catalogs.filter((catalog) => catalog.id !== id);
     this.resources = this.resources.filter((resource) => resource.catalogId !== id);
+  }
+
+  toggleCatalogCollapsed(id: string): void {
+    const catalog = this.catalogs.find((item) => item.id === id);
+    if (catalog === undefined) {
+      throw new Error('Catalog not found');
+    }
+
+    catalog.collapsed = !catalog.collapsed;
   }
 
   createResource(catalogId: string, title: string, url: string): void {

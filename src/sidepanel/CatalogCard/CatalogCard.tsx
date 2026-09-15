@@ -5,8 +5,8 @@ import { CSS } from '@dnd-kit/utilities';
 import CatalogMenu from '../CatalogMenu/CatalogMenu.tsx';
 import CatalogNameEdit from '../CatalogNameEdit/CatalogNameEdit.tsx';
 import DeleteConfirm from '../DeleteConfirm/DeleteConfirm.tsx';
-import type { ResourceCatalog } from '@/database';
 import ResourceAdd from '../ResourceAdd/ResourceAdd.tsx';
+import type { ResourceCatalog } from '@/database';
 import ResourceRow from '../ResourceRow/ResourceRow.tsx';
 import { observer } from 'mobx-react-lite';
 import styles from './CatalogCard.module.scss';
@@ -68,7 +68,11 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
         )}
 
         <span className={styles.count}>{count}</span>
-        <button type="button" className={styles.ico}>
+        <button
+          type="button"
+          className={styles.ico}
+          onClick={() => shelfStore.toggleCatalogCollapsed(catalog.id)}
+        >
           <Chevron size={16} />
         </button>
         <button type="button" className={styles.ico} disabled={openAllDisabled}>
@@ -79,7 +83,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
 
       {deleting ? <DeleteConfirm catalog={catalog} /> : null}
 
-      {resources.length > 0 ? (
+      {!catalog.collapsed && resources.length > 0 ? (
         <div className={styles.rows}>
           {resources.map((resource) => (
             <ResourceRow key={resource.id} resource={resource} />
