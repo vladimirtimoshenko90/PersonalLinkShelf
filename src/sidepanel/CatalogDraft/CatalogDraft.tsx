@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react';
 
-import { useAutoFocus } from '@/hooks/useAutoFocus';
-import { useKeyPress } from '@/hooks/useKeyPress';
-import { shelfStore } from '@/store';
 import type { CatalogKind } from '@/database';
+import { shelfStore } from '@/store';
 import styles from './CatalogDraft.module.scss';
+import { useAutoFocus } from '@/hooks/useAutoFocus';
+import { useBlur } from '@/hooks/useBlur';
+import { useKeyPress } from '@/hooks/useKeyPress';
 
 export default function CatalogDraft({ kind, onDone }: { kind: CatalogKind; onDone: () => void }) {
   const [name, setName] = useState('');
@@ -14,6 +15,12 @@ export default function CatalogDraft({ kind, onDone }: { kind: CatalogKind; onDo
   useKeyPress(inputRef, 'Escape', (event) => {
     event.preventDefault();
     onDone();
+  });
+
+  useBlur(inputRef, () => {
+    if (name.trim() === '') {
+      onDone();
+    }
   });
 
   useKeyPress(inputRef, 'Enter', (event) => {
