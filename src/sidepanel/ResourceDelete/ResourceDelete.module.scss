@@ -1,0 +1,62 @@
+.root {
+  margin: 0 4px 6px;
+  padding: 8px 12px 12px;
+  border: var(--hairline) solid color-mix(in srgb, var(--danger) 32%, var(--stroke));
+  border-radius: var(--radius);
+  background: var(--hover);
+
+  .question {
+    margin: 0 0 10px;
+    color: var(--fg);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-title);
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+
+    .cancel {
+      padding: 6px 10px;
+      border: 0;
+      border-radius: var(--radius);
+      background: none;
+      color: var(--muted);
+      font-size: var(--fs-body);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--bg);
+        color: var(--fg);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 0;
+      }
+    }
+
+    .delete {
+      padding: 6px 12px;
+      border: 0;
+      border-radius: var(--radius);
+      background: var(--danger);
+      color: var(--on-accent);
+      font-size: var(--fs-body);
+      font-weight: var(--fw-title);
+      cursor: pointer;
+
+      &:hover {
+        background: color-mix(in srgb, var(--danger) 88%, var(--fg));
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 0;
+      }
+    }
+  }
+}

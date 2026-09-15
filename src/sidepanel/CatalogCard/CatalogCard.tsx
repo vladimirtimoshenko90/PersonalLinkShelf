@@ -7,6 +7,7 @@ import CatalogNameEdit from '../CatalogNameEdit/CatalogNameEdit.tsx';
 import DeleteConfirm from '../DeleteConfirm/DeleteConfirm.tsx';
 import ResourceAdd from '../ResourceAdd/ResourceAdd.tsx';
 import type { ResourceCatalog } from '@/database';
+import ResourceDelete from '../ResourceDelete/ResourceDelete.tsx';
 import ResourceEdit from '../ResourceEdit/ResourceEdit.tsx';
 import ResourceRow from '../ResourceRow/ResourceRow.tsx';
 import { observer } from 'mobx-react-lite';
@@ -19,6 +20,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
   const editing = uiStore.editingCatalogId === catalog.id;
   const deleting = uiStore.deletingCatalogId === catalog.id;
   const addingResource = uiStore.addingResourceCatalogId === catalog.id;
+  const deletingResource = uiStore.deletingResource?.catalogId === catalog.id;
   const rootRef = useRef<HTMLElement>(null);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: catalog.id,
@@ -33,7 +35,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
   );
   const Chevron = catalog.collapsed ? ChevronRight : ChevronDown;
 
-  useClickOutside(rootRef, () => deleting && uiStore.releaseCatalog());
+  useClickOutside(rootRef, () => (deleting || deletingResource) && uiStore.releaseCatalog());
 
   const rootClass = [
     styles.root,
@@ -86,13 +88,15 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
 
       {!catalog.collapsed && resources.length > 0 ? (
         <div className={styles.rows}>
-          {resources.map((resource) =>
-            uiStore.editingResourceId === resource.id ? (
-              <ResourceEdit key={resource.id} resource={resource} />
-            ) : (
-              <ResourceRow key={resource.id} resource={resource} />
-            ),
-          )}
+          {resources.map((resource) => {
+            if (uiStore.deletingResource?.id === resource.id) {
+              return <ResourceDelete key={resource.id} />;
+            }
+            if (uiStore.editingResourceId === resource.id) {
+              return <ResourceEdit key={resource.id} resource={resource} />;
+            }
+            return <ResourceRow key={resource.id} resource={resource} />;
+          })}
         </div>
       ) : null}
 

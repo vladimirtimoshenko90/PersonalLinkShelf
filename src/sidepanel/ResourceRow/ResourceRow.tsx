@@ -1,4 +1,4 @@
-import { GripVertical, Link, Pencil } from 'lucide-react';
+import { GripVertical, Link, Pencil, Trash2 } from 'lucide-react';
 import { uiStore } from '@/store';
 
 import type { WebResource } from '@/database';
@@ -24,6 +24,13 @@ export default function ResourceRow({ resource }: { resource: WebResource }) {
         onClick={() => uiStore.startEditingResource(resource.id)}
       >
         <Pencil size={16} />
+      </button>
+      <button
+        type="button"
+        className={`${styles.ico} ${styles.delete}`}
+        onClick={() => uiStore.startDeletingResource(resource)}
+      >
+        <Trash2 size={16} />
       </button>
       {url !== '' ? (
         <span className={styles.mark}>

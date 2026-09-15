@@ -1,8 +1,10 @@
+import type { WebResource } from '@/database';
 import { makeAutoObservable } from 'mobx';
 
 export class UiStore {
   addingResourceCatalogId: string | null = null;
   editingResourceId: string | null = null;
+  deletingResource: WebResource | null = null;
   editingCatalogId: string | null = null;
   deletingCatalogId: string | null = null;
 
@@ -20,6 +22,11 @@ export class UiStore {
     this.editingResourceId = resourceId;
   }
 
+  startDeletingResource(resource: WebResource): void {
+    this.releaseCatalog();
+    this.deletingResource = resource;
+  }
+
   startEditingCatalog(catalogId: string): void {
     this.releaseCatalog();
     this.editingCatalogId = catalogId;
@@ -33,6 +40,7 @@ export class UiStore {
   releaseCatalog(): void {
     this.addingResourceCatalogId = null;
     this.editingResourceId = null;
+    this.deletingResource = null;
     this.editingCatalogId = null;
     this.deletingCatalogId = null;
   }

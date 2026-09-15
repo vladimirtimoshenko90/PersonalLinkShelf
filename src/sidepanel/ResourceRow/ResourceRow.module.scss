@@ -14,7 +14,8 @@
   &:hover,
   &:focus-within {
     .ico {
-      &.edit {
+      &.edit,
+      &.delete {
         opacity: 1;
       }
     }
@@ -42,8 +43,15 @@
       outline-offset: 0;
     }
 
-    &.edit {
+    &.edit,
+    &.delete {
       opacity: 0;
+    }
+
+    &.delete {
+      &:hover {
+        color: var(--danger);
+      }
     }
   }
 

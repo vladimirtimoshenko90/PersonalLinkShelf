@@ -136,6 +136,10 @@ export class ShelfStore {
     resource.url = storedUrl;
   }
 
+  deleteResource(id: string): void {
+    this.resources = this.resources.filter((resource) => resource.id !== id);
+  }
+
   reorderCatalogs(kind: CatalogKind, activeId: string, overId: string): void {
     const sorted = this.catalogs
       .filter((catalog) => catalog.kind === kind)
