@@ -53,7 +53,7 @@ export class ShelfStore {
     }
 
     const ofKind = this.catalogs.filter((catalog) => catalog.kind === kind);
-    const order = ofKind.reduce((max, catalog) => Math.max(max, catalog.order), -1) + 1;
+    const order = ofKind.reduce((min, catalog) => Math.min(min, catalog.order), 1) - 1;
     this.catalogs.push({
       id: crypto.randomUUID(),
       name: trimmed,
