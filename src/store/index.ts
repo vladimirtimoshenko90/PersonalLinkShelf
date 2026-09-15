@@ -64,6 +64,20 @@ export class ShelfStore {
     });
   }
 
+  renameCatalog(id: string, name: string): void {
+    const trimmed = name.trim();
+    if (trimmed === '') {
+      throw new Error('Catalog name is required');
+    }
+
+    const catalog = this.catalogs.find((item) => item.id === id);
+    if (catalog === undefined) {
+      throw new Error('Catalog not found');
+    }
+
+    catalog.name = trimmed;
+  }
+
   private applyBlob(blob: ShelfBlob): void {
     this.catalogs = blob.catalogs;
     this.resources = blob.resources;

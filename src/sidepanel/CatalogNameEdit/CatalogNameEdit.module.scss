@@ -1,0 +1,18 @@
+.root {
+  flex: 1;
+  min-width: 0;
+  padding: 4px;
+  border: var(--hairline) solid var(--accent);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: inherit;
+  font-size: var(--fs-title);
+  font-weight: var(--fw-title);
+  letter-spacing: -0.01em;
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 0;
+  }
+}
