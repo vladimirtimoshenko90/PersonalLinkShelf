@@ -26,6 +26,16 @@ export default function CatalogMenu({ catalog }: { catalog: ResourceCatalog }) {
             onClick={(event) => {
               event.stopPropagation();
               setOpen(false);
+              uiStore.startAddingResource(catalog.id);
+            }}
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setOpen(false);
               uiStore.startEditingCatalog(catalog.id);
             }}
           >

@@ -6,6 +6,7 @@ import CatalogMenu from '../CatalogMenu/CatalogMenu.tsx';
 import CatalogNameEdit from '../CatalogNameEdit/CatalogNameEdit.tsx';
 import DeleteConfirm from '../DeleteConfirm/DeleteConfirm.tsx';
 import type { ResourceCatalog } from '@/database';
+import ResourceAdd from '../ResourceAdd/ResourceAdd.tsx';
 import ResourceRow from '../ResourceRow/ResourceRow.tsx';
 import { observer } from 'mobx-react-lite';
 import styles from './CatalogCard.module.scss';
@@ -16,6 +17,7 @@ import { useSortable } from '@dnd-kit/sortable';
 export default observer(function CatalogCard({ catalog }: { catalog: ResourceCatalog }) {
   const editing = uiStore.editingCatalogId === catalog.id;
   const deleting = uiStore.deletingCatalogId === catalog.id;
+  const addingResource = uiStore.addingResourceCatalogId === catalog.id;
   const rootRef = useRef<HTMLElement>(null);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: catalog.id,
@@ -84,6 +86,8 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
           ))}
         </div>
       ) : null}
+
+      {addingResource ? <ResourceAdd catalog={catalog} /> : null}
     </article>
   );
 });

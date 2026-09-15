@@ -1,0 +1,56 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 8px 8px;
+  padding: 4px 4px 8px;
+
+  .field {
+    flex: 1 1 8rem;
+    min-width: 0;
+    padding: 6px 8px;
+    border: var(--hairline) solid var(--stroke);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: inherit;
+    font-size: var(--fs-body);
+
+    &::placeholder {
+      color: var(--muted);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 0;
+    }
+  }
+
+  .save {
+    flex-shrink: 0;
+    height: 28px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-title);
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--accent) 88%, var(--fg));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 0;
+    }
+
+    &:disabled {
+      opacity: 0.32;
+      cursor: default;
+    }
+  }
+}

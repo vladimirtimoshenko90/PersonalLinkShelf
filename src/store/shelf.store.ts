@@ -7,6 +7,17 @@ function blobSnapshot(catalogs: ResourceCatalog[], resources: WebResource[]): st
   return JSON.stringify({ catalogs, resources });
 }
 
+function normalizeUrl(raw: string): string | null {
+  const trimmed = raw.trim();
+  if (trimmed === '') {
+    return null;
+  }
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) {
+    return trimmed;
+  }
+  return `https://${trimmed}`;
+}
+
 export class ShelfStore {
   catalogs: ResourceCatalog[] = [];
   resources: WebResource[] = [];
@@ -82,6 +93,30 @@ export class ShelfStore {
   deleteCatalog(id: string): void {
     this.catalogs = this.catalogs.filter((catalog) => catalog.id !== id);
     this.resources = this.resources.filter((resource) => resource.catalogId !== id);
+  }
+
+  createResource(catalogId: string, title: string, url: string): void {
+    if (!this.catalogs.some((catalog) => catalog.id === catalogId)) {
+      throw new Error('Catalog not found');
+    }
+
+    const trimmedTitle = title.trim();
+    const storedTitle = trimmedTitle === '' ? null : trimmedTitle;
+    const storedUrl = normalizeUrl(url);
+    if (storedTitle === null && storedUrl === null) {
+      throw new Error('Title or URL required');
+    }
+
+    const ofCatalog = this.resources.filter((resource) => resource.catalogId === catalogId);
+    const order = ofCatalog.reduce((max, resource) => Math.max(max, resource.order), -1) + 1;
+    this.resources.push({
+      id: crypto.randomUUID(),
+      catalogId,
+      title: storedTitle,
+      url: storedUrl,
+      order,
+      createdAt: Date.now(),
+    });
   }
 
   reorderCatalogs(kind: CatalogKind, activeId: string, overId: string): void {
