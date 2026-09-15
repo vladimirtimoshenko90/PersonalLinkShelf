@@ -1,17 +1,13 @@
 import { useRef, useState } from 'react';
 
 import { MoreHorizontal } from 'lucide-react';
-import styles from './CatalogMenu.module.scss';
+import type { ResourceCatalog } from '@/database';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useKeyPress } from '@/hooks/useKeyPress';
+import { uiStore } from '@/store';
+import styles from './CatalogMenu.module.scss';
 
-export default function CatalogMenu({
-  onRename,
-  onDelete,
-}: {
-  onRename: () => void;
-  onDelete: () => void;
-}) {
+export default function CatalogMenu({ catalog }: { catalog: ResourceCatalog }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +26,7 @@ export default function CatalogMenu({
             onClick={(event) => {
               event.stopPropagation();
               setOpen(false);
-              onRename();
+              uiStore.startEditingCatalog(catalog.id);
             }}
           >
             Rename
@@ -41,7 +37,7 @@ export default function CatalogMenu({
             onClick={(event) => {
               event.stopPropagation();
               setOpen(false);
-              onDelete();
+              uiStore.startDeletingCatalog(catalog.id);
             }}
           >
             Delete

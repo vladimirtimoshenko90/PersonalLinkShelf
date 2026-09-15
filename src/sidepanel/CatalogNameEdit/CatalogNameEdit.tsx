@@ -1,31 +1,24 @@
 import { useRef, useState } from 'react';
 
-import styles from './CatalogNameEdit.module.scss';
+import type { ResourceCatalog } from '@/database';
 import { useAutoFocus } from '@/hooks/useAutoFocus';
 import { useBlur } from '@/hooks/useBlur';
 import { useKeyPress } from '@/hooks/useKeyPress';
+import { shelfStore, uiStore } from '@/store';
+import styles from './CatalogNameEdit.module.scss';
 
-export default function CatalogNameEdit({
-  name,
-  onCancel,
-  onSave,
-}: {
-  name: string;
-  onCancel: () => void;
-  onSave: (name: string) => void;
-}) {
-  const [draft, setDraft] = useState(name);
+export default function CatalogNameEdit({ catalog }: { catalog: ResourceCatalog }) {
+  const [draft, setDraft] = useState(catalog.name);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useAutoFocus(inputRef);
 
   function submit() {
     const trimmed = draft.trim();
-    if (trimmed === '') {
-      onCancel();
-    } else {
-      onSave(trimmed);
+    if (trimmed !== '') {
+      shelfStore.renameCatalog(catalog.id, trimmed);
     }
+    uiStore.releaseCatalog();
   }
 
   useKeyPress(inputRef, 'Enter', submit);
