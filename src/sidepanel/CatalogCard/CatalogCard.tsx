@@ -1,14 +1,9 @@
-import {
-  ChevronDown,
-  ChevronRight,
-  ExternalLink,
-  GripVertical,
-  MoreHorizontal,
-} from 'lucide-react';
-import { observer } from 'mobx-react-lite';
+import { ChevronDown, ChevronRight, ExternalLink, GripVertical } from 'lucide-react';
 
-import { shelfStore } from '@/store';
+import CatalogMenu from '../CatalogMenu/CatalogMenu.tsx';
 import type { ResourceCatalog } from '@/database';
+import { observer } from 'mobx-react-lite';
+import { shelfStore } from '@/store';
 import styles from './CatalogCard.module.scss';
 
 export default observer(function CatalogCard({ catalog }: { catalog: ResourceCatalog }) {
@@ -24,7 +19,9 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
         <button type="button" className={styles.ico}>
           <GripVertical size={16} />
         </button>
+
         <span className={styles.name}>{catalog.name}</span>
+
         <span className={styles.count}>{count}</span>
         <button type="button" className={styles.ico}>
           <Chevron size={16} />
@@ -32,9 +29,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
         <button type="button" className={styles.ico} disabled={openAllDisabled}>
           <ExternalLink size={16} />
         </button>
-        <button type="button" className={styles.ico}>
-          <MoreHorizontal size={16} />
-        </button>
+        <CatalogMenu />
       </div>
     </article>
   );
