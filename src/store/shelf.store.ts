@@ -118,6 +118,24 @@ export class ShelfStore {
     });
   }
 
+  updateResource(id: string, title: string, url: string): void {
+    const resource = this.resources.find((item) => item.id === id);
+    if (resource === undefined) {
+      throw new Error('Resource not found');
+    }
+
+    const trimmedTitle = title.trim();
+    const storedTitle = trimmedTitle === '' ? null : trimmedTitle;
+    const trimmedUrl = url.trim();
+    const storedUrl = trimmedUrl === '' ? null : trimmedUrl;
+    if (storedTitle === null && storedUrl === null) {
+      throw new Error('Title or URL required');
+    }
+
+    resource.title = storedTitle;
+    resource.url = storedUrl;
+  }
+
   reorderCatalogs(kind: CatalogKind, activeId: string, overId: string): void {
     const sorted = this.catalogs
       .filter((catalog) => catalog.kind === kind)

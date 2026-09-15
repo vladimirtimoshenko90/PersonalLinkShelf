@@ -1,4 +1,5 @@
-import { GripVertical, Link } from 'lucide-react';
+import { GripVertical, Link, Pencil } from 'lucide-react';
+import { uiStore } from '@/store';
 
 import type { WebResource } from '@/database';
 import styles from './ResourceRow.module.scss';
@@ -17,6 +18,13 @@ export default function ResourceRow({ resource }: { resource: WebResource }) {
         {title !== '' && url !== '' ? <span className={styles.sep}>·</span> : null}
         {url !== '' ? <span className={styles.url}>{url}</span> : null}
       </span>
+      <button
+        type="button"
+        className={`${styles.ico} ${styles.edit}`}
+        onClick={() => uiStore.startEditingResource(resource.id)}
+      >
+        <Pencil size={16} />
+      </button>
       {url !== '' ? (
         <span className={styles.mark}>
           <Link size={16} />
