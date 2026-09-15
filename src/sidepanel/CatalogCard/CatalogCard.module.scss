@@ -4,6 +4,15 @@
   border-radius: var(--radius);
   background: var(--bg);
 
+  &.armed {
+    border-color: color-mix(in srgb, var(--danger) 32%, var(--stroke));
+
+    .head {
+      background: var(--hover);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+  }
+
   .head {
     display: flex;
     align-items: center;
@@ -11,25 +20,17 @@
     min-height: 40px;
     padding: 4px 4px 4px 2px;
 
-    .title {
-      display: flex;
+    .name {
       flex: 1;
       min-width: 0;
-      align-items: center;
-      gap: 4px;
-
-      .name {
-        flex: 0 1 auto;
-        min-width: 0;
-        overflow: hidden;
-        padding: 4px;
-        color: var(--fg);
-        font-size: var(--fs-title);
-        font-weight: var(--fw-title);
-        letter-spacing: -0.01em;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
+      overflow: hidden;
+      padding: 4px;
+      color: var(--fg);
+      font-size: var(--fs-title);
+      font-weight: var(--fw-title);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .count {

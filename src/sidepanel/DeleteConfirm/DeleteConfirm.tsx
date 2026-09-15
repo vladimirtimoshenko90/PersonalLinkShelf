@@ -1,28 +1,30 @@
-import { Check, X } from 'lucide-react';
-import { useRef } from 'react';
-
-import { useClickOutside } from '@/hooks/useClickOutside';
 import styles from './DeleteConfirm.module.scss';
 
 export default function DeleteConfirm({
+  name,
+  count,
   onCancel,
   onConfirm,
 }: {
+  name: string;
+  count: number;
   onCancel: () => void;
   onConfirm: () => void;
 }) {
-  const rootRef = useRef<HTMLDivElement>(null);
-  useClickOutside(rootRef, onCancel);
+  const resources = count === 1 ? '1 resource' : `${count} resources`;
+  const question = count === 0 ? `Delete ${name}?` : `Delete ${name} and ${resources}?`;
 
   return (
-    <div ref={rootRef} className={styles.root}>
-      <span className={styles.label}>Delete?</span>
-      <button type="button" className={styles.cancel} onClick={onCancel}>
-        <X size={20} />
-      </button>
-      <button type="button" className={styles.confirm} onClick={onConfirm}>
-        <Check size={20} />
-      </button>
+    <div className={styles.root}>
+      <p className={styles.question}>{question}</p>
+      <div className={styles.actions}>
+        <button type="button" className={styles.cancel} onClick={onCancel}>
+          Cancel
+        </button>
+        <button type="button" className={styles.delete} onClick={onConfirm}>
+          Delete
+        </button>
+      </div>
     </div>
   );
 }

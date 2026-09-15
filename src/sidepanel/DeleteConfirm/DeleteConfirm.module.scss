@@ -1,50 +1,61 @@
 .root {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 6px;
-  margin-left: 8px;
+  padding: 8px 12px 12px;
+  border-top: var(--hairline) solid var(--stroke);
+  background: var(--hover);
+  border-radius: 0 0 var(--radius) var(--radius);
 
-  .label {
-    padding: 2px 6px;
-    border-radius: 6px;
-    background: var(--danger);
-    color: var(--on-accent);
+  .question {
+    margin: 0 0 10px;
+    color: var(--fg);
     font-size: var(--fs-body);
     font-weight: var(--fw-title);
-    white-space: nowrap;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
   }
 
-  button {
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    border: 0;
-    border-radius: 6px;
-    background: transparent;
-    cursor: pointer;
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
 
-    &:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 0;
+    .cancel {
+      padding: 6px 10px;
+      border: 0;
+      border-radius: var(--radius);
+      background: none;
+      color: var(--muted);
+      font-size: var(--fs-body);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--bg);
+        color: var(--fg);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 0;
+      }
     }
-  }
 
-  .cancel {
-    color: var(--danger);
+    .delete {
+      padding: 6px 12px;
+      border: 0;
+      border-radius: var(--radius);
+      background: var(--danger);
+      color: var(--on-accent);
+      font-size: var(--fs-body);
+      font-weight: var(--fw-title);
+      cursor: pointer;
 
-    &:hover {
-      background: color-mix(in srgb, var(--danger) 12%, var(--bg));
-    }
-  }
+      &:hover {
+        background: color-mix(in srgb, var(--danger) 88%, var(--fg));
+      }
 
-  .confirm {
-    color: var(--accent);
-
-    &:hover {
-      background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+      &:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 0;
+      }
     }
   }
 }

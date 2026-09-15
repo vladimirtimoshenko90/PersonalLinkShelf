@@ -1,4 +1,5 @@
 import { ChevronDown, ChevronRight, ExternalLink, GripVertical } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 import CatalogMenu from '../CatalogMenu/CatalogMenu.tsx';
 import CatalogNameEdit from '../CatalogNameEdit/CatalogNameEdit.tsx';
@@ -7,47 +8,39 @@ import type { ResourceCatalog } from '@/database';
 import { observer } from 'mobx-react-lite';
 import { shelfStore } from '@/store';
 import styles from './CatalogCard.module.scss';
-import { useState } from 'react';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 export default observer(function CatalogCard({ catalog }: { catalog: ResourceCatalog }) {
   const [editing, setEditing] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const rootRef = useRef<HTMLElement>(null);
   const count = shelfStore.resources.filter((resource) => resource.catalogId === catalog.id).length;
   const openAllDisabled = !shelfStore.resources.some(
     (resource) => resource.catalogId === catalog.id && resource.url !== null && resource.url !== '',
   );
   const Chevron = catalog.collapsed ? ChevronRight : ChevronDown;
 
+  useClickOutside(rootRef, () => setDeleting(false));
+
   return (
-    <article className={styles.root}>
+    <article ref={rootRef} className={deleting ? `${styles.root} ${styles.armed}` : styles.root}>
       <div className={styles.head}>
         <button type="button" className={styles.ico}>
           <GripVertical size={16} />
         </button>
 
-        <div className={styles.title}>
-          {editing ? (
-            <CatalogNameEdit
-              name={catalog.name}
-              onCancel={() => setEditing(false)}
-              onSave={(name) => {
-                shelfStore.renameCatalog(catalog.id, name);
-                setEditing(false);
-              }}
-            />
-          ) : (
-            <span className={styles.name}>{catalog.name}</span>
-          )}
-          {deleting ? (
-            <DeleteConfirm
-              onCancel={() => setDeleting(false)}
-              onConfirm={() => {
-                shelfStore.deleteCatalog(catalog.id);
-                setDeleting(false);
-              }}
-            />
-          ) : null}
-        </div>
+        {editing ? (
+          <CatalogNameEdit
+            name={catalog.name}
+            onCancel={() => setEditing(false)}
+            onSave={(name) => {
+              shelfStore.renameCatalog(catalog.id, name);
+              setEditing(false);
+            }}
+          />
+        ) : (
+          <span className={styles.name}>{catalog.name}</span>
+        )}
 
         <span className={styles.count}>{count}</span>
         <button type="button" className={styles.ico}>
@@ -58,6 +51,18 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
         </button>
         <CatalogMenu onRename={() => setEditing(true)} onDelete={() => setDeleting(true)} />
       </div>
+
+      {deleting ? (
+        <DeleteConfirm
+          name={catalog.name}
+          count={count}
+          onCancel={() => setDeleting(false)}
+          onConfirm={() => {
+            shelfStore.deleteCatalog(catalog.id);
+            setDeleting(false);
+          }}
+        />
+      ) : null}
     </article>
   );
 });
