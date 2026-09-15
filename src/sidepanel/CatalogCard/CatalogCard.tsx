@@ -5,6 +5,7 @@ import CatalogMenu from '../CatalogMenu/CatalogMenu.tsx';
 import CatalogNameEdit from '../CatalogNameEdit/CatalogNameEdit.tsx';
 import DeleteConfirm from '../DeleteConfirm/DeleteConfirm.tsx';
 import type { ResourceCatalog } from '@/database';
+import ResourceRow from '../ResourceRow/ResourceRow.tsx';
 import { observer } from 'mobx-react-lite';
 import { shelfStore } from '@/store';
 import styles from './CatalogCard.module.scss';
@@ -14,9 +15,13 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
   const [editing, setEditing] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
-  const count = shelfStore.resources.filter((resource) => resource.catalogId === catalog.id).length;
-  const openAllDisabled = !shelfStore.resources.some(
-    (resource) => resource.catalogId === catalog.id && resource.url !== null && resource.url !== '',
+  const resources = shelfStore.resources
+    .filter((resource) => resource.catalogId === catalog.id)
+    .slice()
+    .sort((left, right) => left.order - right.order);
+  const count = resources.length;
+  const openAllDisabled = !resources.some(
+    (resource) => resource.url !== null && resource.url !== '',
   );
   const Chevron = catalog.collapsed ? ChevronRight : ChevronDown;
 
@@ -61,6 +66,14 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
             setDeleting(false);
           }}
         />
+      ) : null}
+
+      {resources.length > 0 ? (
+        <div className={styles.rows}>
+          {resources.map((resource) => (
+            <ResourceRow key={resource.id} resource={resource} />
+          ))}
+        </div>
       ) : null}
     </article>
   );
