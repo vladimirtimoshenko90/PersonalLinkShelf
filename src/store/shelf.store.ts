@@ -7,17 +7,6 @@ function blobSnapshot(catalogs: ResourceCatalog[], resources: WebResource[]): st
   return JSON.stringify({ catalogs, resources });
 }
 
-function normalizeUrl(raw: string): string | null {
-  const trimmed = raw.trim();
-  if (trimmed === '') {
-    return null;
-  }
-  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) {
-    return trimmed;
-  }
-  return `https://${trimmed}`;
-}
-
 export class ShelfStore {
   catalogs: ResourceCatalog[] = [];
   resources: WebResource[] = [];
@@ -102,7 +91,8 @@ export class ShelfStore {
 
     const trimmedTitle = title.trim();
     const storedTitle = trimmedTitle === '' ? null : trimmedTitle;
-    const storedUrl = normalizeUrl(url);
+    const trimmedUrl = url.trim();
+    const storedUrl = trimmedUrl === '' ? null : trimmedUrl;
     if (storedTitle === null && storedUrl === null) {
       throw new Error('Title or URL required');
     }
