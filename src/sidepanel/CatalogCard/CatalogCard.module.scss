@@ -13,6 +13,13 @@
     }
   }
 
+  &.dragging {
+    position: relative;
+    z-index: 2;
+    opacity: 0.97;
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--fg) 12%, transparent);
+  }
+
   .head {
     display: flex;
     align-items: center;
@@ -69,6 +76,14 @@
       &:disabled {
         opacity: 0.32;
         cursor: default;
+      }
+
+      &.handle {
+        cursor: grab;
+
+        &:active {
+          cursor: grabbing;
+        }
       }
     }
   }

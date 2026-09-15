@@ -84,6 +84,25 @@ export class ShelfStore {
     this.resources = this.resources.filter((resource) => resource.catalogId !== id);
   }
 
+  reorderCatalogs(kind: CatalogKind, activeId: string, overId: string): void {
+    const sorted = this.catalogs
+      .filter((catalog) => catalog.kind === kind)
+      .slice()
+      .sort((left, right) => left.order - right.order);
+    const from = sorted.findIndex((catalog) => catalog.id === activeId);
+    const to = sorted.findIndex((catalog) => catalog.id === overId);
+    if (from < 0 || to < 0 || from === to) {
+      return;
+    }
+
+    const next = sorted.slice();
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved);
+    next.forEach((catalog, index) => {
+      catalog.order = index;
+    });
+  }
+
   private applyBlob(blob: ShelfBlob): void {
     this.catalogs = blob.catalogs;
     this.resources = blob.resources;

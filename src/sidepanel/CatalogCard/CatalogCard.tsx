@@ -1,3 +1,5 @@
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { ChevronDown, ChevronRight, ExternalLink, GripVertical } from 'lucide-react';
 import { useRef, useState } from 'react';
 
@@ -15,6 +17,9 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
   const [editing, setEditing] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: catalog.id,
+  });
   const resources = shelfStore.resources
     .filter((resource) => resource.catalogId === catalog.id)
     .slice()
@@ -27,10 +32,30 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
 
   useClickOutside(rootRef, () => setDeleting(false));
 
+  const rootClass = [
+    styles.root,
+    deleting ? styles.armed : null,
+    isDragging ? styles.dragging : null,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <article ref={rootRef} className={deleting ? `${styles.root} ${styles.armed}` : styles.root}>
+    <article
+      ref={(node) => {
+        rootRef.current = node;
+        setNodeRef(node);
+      }}
+      className={rootClass}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
+    >
       <div className={styles.head}>
-        <button type="button" className={styles.ico}>
+        <button
+          type="button"
+          className={`${styles.ico} ${styles.handle}`}
+          {...attributes}
+          {...listeners}
+        >
           <GripVertical size={16} />
         </button>
 
