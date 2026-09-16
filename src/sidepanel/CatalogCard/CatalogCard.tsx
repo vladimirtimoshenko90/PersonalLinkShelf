@@ -92,7 +92,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
         />
       )}
 
-      {addingResource ? <ResourceAdd catalog={catalog} /> : null}
+      {addingResource && <ResourceAdd catalog={catalog} />}
 
       {!catalog.collapsed && resources.length > 0 && (
         <div className={styles.rows}>

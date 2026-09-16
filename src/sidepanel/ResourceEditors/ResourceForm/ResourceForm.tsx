@@ -71,7 +71,7 @@ export default function ResourceForm({
         />
       </label>
 
-      {error !== null ? <p className={styles.hint}>{error}</p> : null}
+      {error !== null && <p className={styles.hint}>{error}</p>}
 
       <div className={styles.actions}>
         <button type="submit" className={styles.save}>

@@ -11,9 +11,9 @@ export default function App() {
   return (
     <>
       <PanelHeader onPickKind={setDraftKind} />
-      {draftKind ? (
+      {draftKind && (
         <CatalogDraft key={draftKind} kind={draftKind} onDone={() => setDraftKind(null)} />
-      ) : null}
+      )}
       <PanelBody />
     </>
   );

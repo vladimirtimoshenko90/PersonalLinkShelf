@@ -28,7 +28,7 @@ export default function PanelHeader({ onPickKind }: { onPickKind: (kind: Catalog
         >
           + New
         </button>
-        {open ? (
+        {open && (
           <div className={styles.menu}>
             <button type="button" onClick={() => pick('topic')}>
               Topic
@@ -37,7 +37,7 @@ export default function PanelHeader({ onPickKind }: { onPickKind: (kind: Catalog
               Project
             </button>
           </div>
-        ) : null}
+        )}
       </div>
     </header>
   );

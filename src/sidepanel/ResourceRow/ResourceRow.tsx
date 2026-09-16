@@ -33,9 +33,9 @@ export default observer(function ResourceRow({ resource }: { resource: WebResour
           <GripVertical size={16} />
         </button>
         <span className={styles.copy}>
-          {title !== '' ? <span className={styles.title}>{title}</span> : null}
-          {title !== '' && url !== '' ? <span className={styles.sep}>·</span> : null}
-          {url !== '' ? <span className={styles.url}>{url}</span> : null}
+          {title !== '' && <span className={styles.title}>{title}</span>}
+          {title !== '' && url !== '' && <span className={styles.sep}>·</span>}
+          {url !== '' && <span className={styles.url}>{url}</span>}
         </span>
 
         <button
@@ -52,11 +52,11 @@ export default observer(function ResourceRow({ resource }: { resource: WebResour
         >
           <Trash2 size={16} />
         </button>
-        {url !== '' ? (
+        {url !== '' && (
           <span className={styles.mark}>
             <Link size={16} />
           </span>
-        ) : null}
+        )}
       </div>
 
       {deleting && (

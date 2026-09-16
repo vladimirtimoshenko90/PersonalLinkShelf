@@ -54,18 +54,18 @@ export default observer(function PanelBody() {
 
   return (
     <div className={styles.root}>
-      {projects.length > 0 ? (
+      {projects.length > 0 && (
         <section>
           <h2 className={styles.kicker}>Projects</h2>
           <CatalogKindList kind="project" catalogs={projects} />
         </section>
-      ) : null}
-      {topics.length > 0 ? (
+      )}
+      {topics.length > 0 && (
         <section>
           <h2 className={styles.kicker}>Topics</h2>
           <CatalogKindList kind="topic" catalogs={topics} />
         </section>
-      ) : null}
+      )}
     </div>
   );
 });

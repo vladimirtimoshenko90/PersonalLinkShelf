@@ -19,7 +19,7 @@ export default function CatalogMenu({ catalog }: { catalog: ResourceCatalog }) {
       <button type="button" className={styles.ico} onClick={() => setOpen((value) => !value)}>
         <MoreHorizontal size={16} />
       </button>
-      {open ? (
+      {open && (
         <div className={styles.menu}>
           <button
             type="button"
@@ -53,7 +53,7 @@ export default function CatalogMenu({ catalog }: { catalog: ResourceCatalog }) {
             Delete
           </button>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
