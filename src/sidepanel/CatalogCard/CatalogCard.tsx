@@ -1,10 +1,10 @@
-import { ChevronDown, ChevronRight, ExternalLink, GripVertical } from 'lucide-react';
 import { shelfStore, uiStore } from '@/store';
 
 import { CSS } from '@dnd-kit/utilities';
-import CatalogMenu from '../CatalogMenu/CatalogMenu.tsx';
+import CatalogActions from './CatalogActions/CatalogActions.tsx';
 import CatalogNameEdit from '../CatalogNameEdit/CatalogNameEdit.tsx';
 import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
+import { GripVertical } from 'lucide-react';
 import ResourceAdd from '../ResourceEditors/ResourceAdd.tsx';
 import type { ResourceCatalog } from '@/database';
 import ResourceRow from '../ResourceRow/ResourceRow.tsx';
@@ -27,10 +27,6 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
     .slice()
     .sort((left, right) => left.order - right.order);
   const count = resources.length;
-  const openAllDisabled = !resources.some(
-    (resource) => resource.url !== null && resource.url !== '',
-  );
-  const Chevron = catalog.collapsed ? ChevronRight : ChevronDown;
 
   useClickOutside(rootRef, () => deleting && uiStore.release());
 
@@ -67,22 +63,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
           <span className={styles.name}>{catalog.name}</span>
         )}
 
-        {count > 0 && (
-          <>
-            <span className={styles.count}>{count}</span>
-            <button
-              type="button"
-              className={styles.ico}
-              onClick={() => shelfStore.toggleCatalogCollapsed(catalog.id)}
-            >
-              <Chevron size={16} />
-            </button>
-          </>
-        )}
-        <button type="button" className={styles.ico} disabled={openAllDisabled}>
-          <ExternalLink size={16} />
-        </button>
-        <CatalogMenu catalog={catalog} />
+        <CatalogActions catalog={catalog} />
       </div>
 
       {deleting && (

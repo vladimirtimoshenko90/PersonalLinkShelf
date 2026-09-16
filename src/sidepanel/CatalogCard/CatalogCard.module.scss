@@ -40,14 +40,6 @@
       text-overflow: ellipsis;
     }
 
-    .count {
-      flex-shrink: 0;
-      padding: 0 4px;
-      color: var(--muted);
-      font-size: var(--fs-meta);
-      font-variant-numeric: tabular-nums;
-    }
-
     .ico {
       display: grid;
       flex-shrink: 0;
