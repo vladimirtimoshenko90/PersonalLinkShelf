@@ -1,7 +1,8 @@
-import { GripVertical, Pencil, Trash2 } from 'lucide-react';
 import { shelfStore, uiStore } from '@/store';
 
 import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
+import { GripVertical } from 'lucide-react';
+import ResourceActions from './ResourceActions.tsx';
 import ResourceEdit from '../ResourceEditors/ResourceEdit.tsx';
 import type { WebResource } from '@/database';
 import { observer } from 'mobx-react-lite';
@@ -38,20 +39,7 @@ export default observer(function ResourceRow({ resource }: { resource: WebResour
           {url !== '' && <span className={styles.url}>{url}</span>}
         </span>
 
-        <button
-          type="button"
-          className={`${styles.ico} ${styles.edit}`}
-          onClick={() => uiStore.startEditingResource(resource.id)}
-        >
-          <Pencil size={16} />
-        </button>
-        <button
-          type="button"
-          className={`${styles.ico} ${styles.delete}`}
-          onClick={() => uiStore.startDeletingResource(resource)}
-        >
-          <Trash2 size={16} />
-        </button>
+        <ResourceActions resource={resource} />
       </div>
 
       {deleting && (
