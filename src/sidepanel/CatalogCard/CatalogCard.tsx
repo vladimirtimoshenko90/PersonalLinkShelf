@@ -67,14 +67,18 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
           <span className={styles.name}>{catalog.name}</span>
         )}
 
-        <span className={styles.count}>{count}</span>
-        <button
-          type="button"
-          className={styles.ico}
-          onClick={() => shelfStore.toggleCatalogCollapsed(catalog.id)}
-        >
-          <Chevron size={16} />
-        </button>
+        {count > 0 && (
+          <>
+            <span className={styles.count}>{count}</span>
+            <button
+              type="button"
+              className={styles.ico}
+              onClick={() => shelfStore.toggleCatalogCollapsed(catalog.id)}
+            >
+              <Chevron size={16} />
+            </button>
+          </>
+        )}
         <button type="button" className={styles.ico} disabled={openAllDisabled}>
           <ExternalLink size={16} />
         </button>
