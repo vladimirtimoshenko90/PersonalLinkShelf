@@ -13,7 +13,7 @@ export default observer(function DeleteConfirm({ catalog }: { catalog: ResourceC
     <div className={styles.root}>
       <p className={styles.question}>{question}</p>
       <div className={styles.actions}>
-        <button type="button" className={styles.cancel} onClick={() => uiStore.releaseCatalog()}>
+        <button type="button" className={styles.cancel} onClick={() => uiStore.release()}>
           Cancel
         </button>
         <button
@@ -21,7 +21,7 @@ export default observer(function DeleteConfirm({ catalog }: { catalog: ResourceC
           className={styles.delete}
           onClick={() => {
             shelfStore.deleteCatalog(catalog.id);
-            uiStore.releaseCatalog();
+            uiStore.release();
           }}
         >
           Delete

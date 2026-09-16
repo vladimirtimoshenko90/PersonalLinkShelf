@@ -6,10 +6,15 @@ import type { WebResource } from '@/database';
 import { observer } from 'mobx-react-lite';
 import styles from './ResourceRow.module.scss';
 import { uiStore } from '@/store';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { useRef } from 'react';
 
 export default observer(function ResourceRow({ resource }: { resource: WebResource }) {
   const editing = uiStore.editingResourceId === resource.id;
   const deleting = uiStore.deletingResource?.id === resource.id;
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(rootRef, () => deleting && uiStore.release());
 
   if (editing) {
     return <ResourceEdit resource={resource} />;
@@ -19,7 +24,10 @@ export default observer(function ResourceRow({ resource }: { resource: WebResour
   const url = resource.url?.trim() ?? '';
 
   return (
-    <div className={deleting ? `${styles.resourceRow} ${styles.armed}` : styles.resourceRow}>
+    <div
+      ref={rootRef}
+      className={deleting ? `${styles.resourceRow} ${styles.armed}` : styles.resourceRow}
+    >
       <div className={styles.body}>
         <button type="button" className={styles.ico}>
           <GripVertical size={16} />

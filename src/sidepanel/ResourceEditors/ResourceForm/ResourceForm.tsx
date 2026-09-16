@@ -21,7 +21,7 @@ export default function ResourceForm({
 
   useKeyPress(rootRef, 'Escape', (event) => {
     event.preventDefault();
-    uiStore.releaseCatalog();
+    uiStore.release();
   });
 
   function onSubmit(event: SubmitEvent<HTMLFormElement>) {
@@ -37,7 +37,7 @@ export default function ResourceForm({
       return;
     }
     onSave(draft.title, draft.url);
-    uiStore.releaseCatalog();
+    uiStore.release();
   }
 
   function onFieldChange(field: 'title' | 'url', value: string) {
@@ -77,7 +77,7 @@ export default function ResourceForm({
         <button type="submit" className={styles.save}>
           Save
         </button>
-        <button type="button" className={styles.cancel} onClick={() => uiStore.releaseCatalog()}>
+        <button type="button" className={styles.cancel} onClick={() => uiStore.release()}>
           Cancel
         </button>
       </div>

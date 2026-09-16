@@ -13,31 +13,31 @@ export class UiStore {
   }
 
   startAddingResource(catalogId: string): void {
-    this.releaseCatalog();
+    this.release();
     this.addingResourceCatalogId = catalogId;
   }
 
   startEditingResource(resourceId: string): void {
-    this.releaseCatalog();
+    this.release();
     this.editingResourceId = resourceId;
   }
 
   startDeletingResource(resource: WebResource): void {
-    this.releaseCatalog();
+    this.release();
     this.deletingResource = resource;
   }
 
   startEditingCatalog(catalogId: string): void {
-    this.releaseCatalog();
+    this.release();
     this.editingCatalogId = catalogId;
   }
 
   startDeletingCatalog(catalogId: string): void {
-    this.releaseCatalog();
+    this.release();
     this.deletingCatalogId = catalogId;
   }
 
-  releaseCatalog(): void {
+  release(): void {
     this.addingResourceCatalogId = null;
     this.editingResourceId = null;
     this.deletingResource = null;

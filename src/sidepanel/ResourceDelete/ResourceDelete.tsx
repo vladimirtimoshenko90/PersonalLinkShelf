@@ -12,7 +12,7 @@ export default observer(function ResourceDelete({ resource }: { resource: WebRes
     <div className={styles.resourceDelete}>
       <p className={styles.question}>{`Delete ${label}?`}</p>
       <div className={styles.actions}>
-        <button type="button" className={styles.cancel} onClick={() => uiStore.releaseCatalog()}>
+        <button type="button" className={styles.cancel} onClick={() => uiStore.release()}>
           Cancel
         </button>
         <button
@@ -20,7 +20,7 @@ export default observer(function ResourceDelete({ resource }: { resource: WebRes
           className={styles.delete}
           onClick={() => {
             shelfStore.deleteResource(resource.id);
-            uiStore.releaseCatalog();
+            uiStore.release();
           }}
         >
           Delete

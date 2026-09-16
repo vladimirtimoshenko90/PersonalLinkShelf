@@ -18,7 +18,7 @@ export default function CatalogNameEdit({ catalog }: { catalog: ResourceCatalog 
     if (trimmed !== '') {
       shelfStore.renameCatalog(catalog.id, trimmed);
     }
-    uiStore.releaseCatalog();
+    uiStore.release();
   }
 
   useKeyPress(inputRef, 'Enter', submit);

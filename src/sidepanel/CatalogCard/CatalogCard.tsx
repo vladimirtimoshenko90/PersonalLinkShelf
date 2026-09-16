@@ -18,7 +18,6 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
   const editing = uiStore.editingCatalogId === catalog.id;
   const deleting = uiStore.deletingCatalogId === catalog.id;
   const addingResource = uiStore.addingResourceCatalogId === catalog.id;
-  const deletingResource = uiStore.deletingResource?.catalogId === catalog.id;
   const rootRef = useRef<HTMLElement>(null);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: catalog.id,
@@ -33,7 +32,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
   );
   const Chevron = catalog.collapsed ? ChevronRight : ChevronDown;
 
-  useClickOutside(rootRef, () => (deleting || deletingResource) && uiStore.releaseCatalog());
+  useClickOutside(rootRef, () => deleting && uiStore.release());
 
   const rootClass = [
     styles.root,
