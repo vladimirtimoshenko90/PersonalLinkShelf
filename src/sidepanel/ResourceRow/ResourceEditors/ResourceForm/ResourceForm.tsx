@@ -4,13 +4,16 @@ import { useAutoFocus } from '@/hooks/useAutoFocus';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { uiStore } from '@/store';
 import styles from './ResourceForm.module.scss';
+import { readActiveTab, tabCaptureHint } from './tabCapture.ts';
 
 export default function ResourceForm({
   initial,
   onSave,
+  captureTab = false,
 }: {
   initial: { title: string; url: string };
   onSave: (title: string, url: string) => void;
+  captureTab?: boolean;
 }) {
   const [draft, setDraft] = useState(initial);
   const [error, setError] = useState<string | null>(null);
@@ -45,6 +48,17 @@ export default function ResourceForm({
     setDraft({ ...draft, [field]: value });
   }
 
+  async function onThisTab() {
+    const tab = await readActiveTab();
+    const hint = tabCaptureHint(tab?.url);
+    if (hint !== null || tab === null) {
+      setError(hint ?? "Can't use this page.");
+      return;
+    }
+    setError(null);
+    setDraft({ title: tab.title, url: tab.url });
+  }
+
   return (
     <form ref={rootRef} className={`${styles.resourceForm} resourceForm`} onSubmit={onSubmit}>
       <label className={styles.field}>
@@ -74,6 +88,11 @@ export default function ResourceForm({
       {error !== null && <p className={styles.hint}>{error}</p>}
 
       <div className={styles.actions}>
+        {captureTab && (
+          <button type="button" className={styles.thisTab} onClick={() => void onThisTab()}>
+            This tab
+          </button>
+        )}
         <button type="submit" className={styles.save}>
           Save
         </button>

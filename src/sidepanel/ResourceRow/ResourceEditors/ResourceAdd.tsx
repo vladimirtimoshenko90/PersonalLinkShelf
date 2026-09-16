@@ -6,6 +6,7 @@ export default function ResourceAdd({ catalog }: { catalog: ResourceCatalog }) {
   return (
     <ResourceForm
       initial={{ title: '', url: '' }}
+      captureTab
       onSave={(title, url) => shelfStore.createResource(catalog.id, title, url)}
     />
   );
