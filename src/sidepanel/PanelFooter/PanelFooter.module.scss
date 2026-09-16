@@ -1,31 +1,48 @@
-.root {
-  position: sticky;
-  top: 0;
-  z-index: 4;
+.panelFooter {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  min-height: 48px;
-  padding: 8px 10px 8px 12px;
+  gap: 8px;
+  padding: 8px 10px 10px;
   background: var(--bg);
-  border-bottom: var(--hairline) solid var(--stroke);
+  border-top: var(--hairline) solid var(--stroke);
 
-  .name {
-    margin: 0;
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 2px;
     min-width: 0;
-    overflow: hidden;
-    color: var(--fg);
-    font-size: var(--fs-title);
-    font-weight: var(--fw-title);
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+
+    .ico {
+      display: grid;
+      flex-shrink: 0;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background var(--motion) ease;
+
+      &:hover {
+        background: var(--hover);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 0;
+      }
+    }
   }
 
   .newWrap {
     position: relative;
     flex-shrink: 0;
+    margin-left: auto;
 
     .newButton {
       display: inline-flex;
@@ -54,8 +71,8 @@
 
     .menu {
       position: absolute;
-      top: calc(100% + 6px);
       right: 0;
+      bottom: calc(100% + 6px);
       z-index: 8;
       min-width: 168px;
       padding: 4px;
@@ -78,6 +95,11 @@
 
         &:hover {
           background: var(--hover);
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: 0;
         }
       }
     }

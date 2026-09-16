@@ -46,7 +46,7 @@ export default observer(function PanelBody() {
 
   if (shelfStore.catalogs.length === 0) {
     return (
-      <div className={styles.root}>
+      <div className={`${styles.root} ${styles.emptyShelf}`}>
         <p className={styles.empty}>Create a topic or a project to start.</p>
       </div>
     );

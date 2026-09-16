@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react';
 
+import { Download, Upload } from 'lucide-react';
+
+import type { CatalogKind } from '@/database';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useKeyPress } from '@/hooks/useKeyPress';
-import type { CatalogKind } from '@/database';
-import styles from './PanelHeader.module.scss';
+import styles from './PanelFooter.module.scss';
 
-export default function PanelHeader({ onPickKind }: { onPickKind: (kind: CatalogKind) => void }) {
+export default function PanelFooter({ onPickKind }: { onPickKind: (kind: CatalogKind) => void }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -18,8 +20,15 @@ export default function PanelHeader({ onPickKind }: { onPickKind: (kind: Catalog
   }
 
   return (
-    <header className={styles.root}>
-      <h1 className={styles.name}>Personal Link Shelf</h1>
+    <footer className={styles.panelFooter}>
+      <div className={styles.tools}>
+        <button type="button" className={styles.ico} title="Import from JSON">
+          <Download size={16} />
+        </button>
+        <button type="button" className={styles.ico} title="Export as JSON">
+          <Upload size={16} />
+        </button>
+      </div>
       <div ref={wrapRef} className={styles.newWrap}>
         <button
           type="button"
@@ -39,6 +48,6 @@ export default function PanelHeader({ onPickKind }: { onPickKind: (kind: Catalog
           </div>
         )}
       </div>
-    </header>
+    </footer>
   );
 }
