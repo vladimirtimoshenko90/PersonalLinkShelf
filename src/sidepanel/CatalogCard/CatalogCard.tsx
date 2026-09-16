@@ -4,7 +4,7 @@ import { shelfStore, uiStore } from '@/store';
 import { CSS } from '@dnd-kit/utilities';
 import CatalogMenu from '../CatalogMenu/CatalogMenu.tsx';
 import CatalogNameEdit from '../CatalogNameEdit/CatalogNameEdit.tsx';
-import DeleteConfirm from '../DeleteConfirm/DeleteConfirm.tsx';
+import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
 import ResourceAdd from '../ResourceEditors/ResourceAdd.tsx';
 import type { ResourceCatalog } from '@/database';
 import ResourceRow from '../ResourceRow/ResourceRow.tsx';
@@ -81,7 +81,16 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
         <CatalogMenu catalog={catalog} />
       </div>
 
-      {deleting ? <DeleteConfirm catalog={catalog} /> : null}
+      {deleting && (
+        <DeleteConfirm
+          question={`Delete ${catalog.name} and all its resources?`}
+          onCancel={() => uiStore.release()}
+          onDelete={() => {
+            shelfStore.deleteCatalog(catalog.id);
+            uiStore.release();
+          }}
+        />
+      )}
 
       {addingResource ? <ResourceAdd catalog={catalog} /> : null}
 

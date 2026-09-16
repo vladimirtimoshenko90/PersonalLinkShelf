@@ -1,11 +1,11 @@
 import { GripVertical, Link, Pencil, Trash2 } from 'lucide-react';
+import { shelfStore, uiStore } from '@/store';
 
-import ResourceDelete from '../ResourceDelete/ResourceDelete.tsx';
+import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
 import ResourceEdit from '../ResourceEditors/ResourceEdit.tsx';
 import type { WebResource } from '@/database';
 import { observer } from 'mobx-react-lite';
 import styles from './ResourceRow.module.scss';
-import { uiStore } from '@/store';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useRef } from 'react';
 
@@ -59,7 +59,16 @@ export default observer(function ResourceRow({ resource }: { resource: WebResour
         ) : null}
       </div>
 
-      {deleting ? <ResourceDelete resource={resource} /> : null}
+      {deleting && (
+        <DeleteConfirm
+          question={`Delete ${title !== '' ? title : url}?`}
+          onCancel={() => uiStore.release()}
+          onDelete={() => {
+            shelfStore.deleteResource(resource.id);
+            uiStore.release();
+          }}
+        />
+      )}
     </div>
   );
 });
