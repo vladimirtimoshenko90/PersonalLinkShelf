@@ -86,6 +86,8 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
 
       {deleting ? <DeleteConfirm catalog={catalog} /> : null}
 
+      {addingResource ? <ResourceAdd catalog={catalog} /> : null}
+
       {!catalog.collapsed && resources.length > 0 ? (
         <div className={styles.rows}>
           {resources.map((resource) => {
@@ -99,8 +101,6 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
           })}
         </div>
       ) : null}
-
-      {addingResource ? <ResourceAdd catalog={catalog} /> : null}
     </article>
   );
 });

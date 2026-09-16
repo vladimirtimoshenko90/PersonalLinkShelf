@@ -107,7 +107,7 @@ export class ShelfStore {
     }
 
     const ofCatalog = this.resources.filter((resource) => resource.catalogId === catalogId);
-    const order = ofCatalog.reduce((max, resource) => Math.max(max, resource.order), -1) + 1;
+    const order = ofCatalog.reduce((min, resource) => Math.min(min, resource.order), 1) - 1;
     this.resources.push({
       id: crypto.randomUUID(),
       catalogId,
