@@ -83,7 +83,11 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
 
       {deleting && (
         <DeleteConfirm
-          question={`Delete ${catalog.name} and all its resources?`}
+          question={
+            count === 0
+              ? `Delete ${catalog.name}?`
+              : `Delete ${catalog.name} and its ${count} resources?`
+          }
           onCancel={() => uiStore.release()}
           onDelete={() => {
             shelfStore.deleteCatalog(catalog.id);
@@ -92,9 +96,9 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
         />
       )}
 
-      {addingResource && <ResourceAdd catalog={catalog} />}
+      {!deleting && addingResource && <ResourceAdd catalog={catalog} />}
 
-      {!catalog.collapsed && resources.length > 0 && (
+      {!deleting && !catalog.collapsed && resources.length > 0 && (
         <div className={styles.rows}>
           {resources.map((resource) => (
             <ResourceRow key={resource.id} resource={resource} />
