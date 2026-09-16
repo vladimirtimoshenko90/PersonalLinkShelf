@@ -94,7 +94,8 @@ export class ShelfStore {
   }
 
   createResource(catalogId: string, title: string, url: string): void {
-    if (!this.catalogs.some((catalog) => catalog.id === catalogId)) {
+    const catalog = this.catalogs.find((item) => item.id === catalogId);
+    if (catalog === undefined) {
       throw new Error('Catalog not found');
     }
 
@@ -116,6 +117,8 @@ export class ShelfStore {
       order,
       createdAt: Date.now(),
     });
+
+    catalog.collapsed = false;
   }
 
   updateResource(id: string, title: string, url: string): void {
