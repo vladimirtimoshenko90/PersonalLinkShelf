@@ -3,7 +3,7 @@ import { shelfStore, uiStore } from '@/store';
 import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
 import { GripVertical } from 'lucide-react';
 import ResourceActions from './ResourceActions.tsx';
-import ResourceEdit from '../ResourceEditors/ResourceEdit.tsx';
+import ResourceEdit from './ResourceEditors/ResourceEdit.tsx';
 import type { WebResource } from '@/database';
 import { observer } from 'mobx-react-lite';
 import styles from './ResourceRow.module.scss';
@@ -33,6 +33,7 @@ export default observer(function ResourceRow({ resource }: { resource: WebResour
         <button type="button" className={styles.ico}>
           <GripVertical size={16} />
         </button>
+
         <span className={styles.copy}>
           {title !== '' && <span className={styles.title}>{title}</span>}
           {title !== '' && url !== '' && <span className={styles.sep}>·</span>}

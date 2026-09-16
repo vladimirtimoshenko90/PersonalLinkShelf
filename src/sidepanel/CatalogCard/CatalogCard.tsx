@@ -6,7 +6,7 @@ import CatalogEdit from './CatalogEdit.tsx';
 import CatalogView from './CatalogView.tsx';
 import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
 import { GripVertical } from 'lucide-react';
-import ResourceAdd from '../ResourceEditors/ResourceAdd.tsx';
+import ResourceAdd from '../ResourceRow/ResourceEditors/ResourceAdd.tsx';
 import type { ResourceCatalog } from '@/database';
 import ResourceRow from '../ResourceRow/ResourceRow.tsx';
 import { observer } from 'mobx-react-lite';
