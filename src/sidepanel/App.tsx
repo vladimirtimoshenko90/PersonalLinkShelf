@@ -1,7 +1,7 @@
-import CatalogDraft from './CatalogDraft/CatalogDraft.tsx';
+import CatalogDraft from './layout/CatalogDraft/CatalogDraft.tsx';
 import type { CatalogKind } from '@/database';
-import PanelBody from './PanelBody/PanelBody.tsx';
-import PanelFooter from './PanelFooter/PanelFooter.tsx';
+import PanelBody from './layout/PanelBody/PanelBody.tsx';
+import PanelFooter from './layout/PanelFooter/PanelFooter.tsx';
 import { useState } from 'react';
 
 export default function App() {

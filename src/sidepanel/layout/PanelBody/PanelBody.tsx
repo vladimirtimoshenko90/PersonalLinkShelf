@@ -2,7 +2,7 @@ import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from 
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { observer } from 'mobx-react-lite';
 
-import CatalogCard from '../CatalogCard/CatalogCard.tsx';
+import CatalogCard from '../../CatalogCard/CatalogCard.tsx';
 import type { CatalogKind, ResourceCatalog } from '@/database';
 import { shelfStore } from '@/store';
 import styles from './PanelBody.module.scss';
