@@ -1,11 +1,11 @@
+import { shelfStore, uiStore } from '@/store';
 import { useRef, useState } from 'react';
 
 import type { ResourceCatalog } from '@/database';
+import styles from './CatalogNameEdit.module.scss';
 import { useAutoFocus } from '@/hooks/useAutoFocus';
 import { useBlur } from '@/hooks/useBlur';
 import { useKeyPress } from '@/hooks/useKeyPress';
-import { shelfStore, uiStore } from '@/store';
-import styles from './CatalogNameEdit.module.scss';
 
 export default function CatalogNameEdit({ catalog }: { catalog: ResourceCatalog }) {
   const [draft, setDraft] = useState(catalog.name);
@@ -14,6 +14,11 @@ export default function CatalogNameEdit({ catalog }: { catalog: ResourceCatalog 
   useAutoFocus(inputRef);
 
   function submit() {
+    // Escape already released edit; the input still blurs and would save without this.
+    if (uiStore.editingCatalogId !== catalog.id) {
+      return;
+    }
+
     const trimmed = draft.trim();
     if (trimmed !== '') {
       shelfStore.renameCatalog(catalog.id, trimmed);
@@ -21,6 +26,7 @@ export default function CatalogNameEdit({ catalog }: { catalog: ResourceCatalog 
     uiStore.release();
   }
 
+  useKeyPress(inputRef, 'Escape', () => uiStore.release());
   useKeyPress(inputRef, 'Enter', submit);
   useBlur(inputRef, submit);
 
