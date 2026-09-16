@@ -14,10 +14,10 @@ Applies to every UI surface (side panel, popup, options, pages).
 
 **No ARIA.** Do not add `aria-*` or `role`. Keep `type="button"` and `disabled`.
 
-**SCSS.** One root class per module. Nest selectors to follow the JSX tree. Do not flatten siblings of one block. Do not nest past the DOM. Pseudo-classes stay on the element they modify.
+**SCSS.** One outer class per module, named after the component in camelCase (`CatalogCard` → `.catalogCard`). Nest selectors to follow the JSX tree. Do not flatten siblings of one block. Do not nest past the DOM. Pseudo-classes stay on the element they modify.
 
 ```scss
-.root {
+.catalogCard {
   .head {
     .name {
     }
