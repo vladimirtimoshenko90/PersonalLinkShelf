@@ -2,7 +2,8 @@ import { shelfStore, uiStore } from '@/store';
 
 import { CSS } from '@dnd-kit/utilities';
 import CatalogActions from './CatalogActions/CatalogActions.tsx';
-import CatalogNameEdit from '../CatalogNameEdit/CatalogNameEdit.tsx';
+import CatalogEdit from './CatalogEdit.tsx';
+import CatalogView from './CatalogView.tsx';
 import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
 import { GripVertical } from 'lucide-react';
 import ResourceAdd from '../ResourceEditors/ResourceAdd.tsx';
@@ -57,11 +58,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
           <GripVertical size={16} />
         </button>
 
-        {editing ? (
-          <CatalogNameEdit catalog={catalog} />
-        ) : (
-          <span className={styles.name}>{catalog.name}</span>
-        )}
+        {editing ? <CatalogEdit catalog={catalog} /> : <CatalogView catalog={catalog} />}
 
         <CatalogActions catalog={catalog} />
       </div>

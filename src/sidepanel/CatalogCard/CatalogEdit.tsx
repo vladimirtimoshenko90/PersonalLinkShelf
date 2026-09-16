@@ -2,12 +2,12 @@ import { shelfStore, uiStore } from '@/store';
 import { useRef, useState } from 'react';
 
 import type { ResourceCatalog } from '@/database';
-import styles from './CatalogNameEdit.module.scss';
+import styles from './CatalogCard.module.scss';
 import { useAutoFocus } from '@/hooks/useAutoFocus';
 import { useBlur } from '@/hooks/useBlur';
 import { useKeyPress } from '@/hooks/useKeyPress';
 
-export default function CatalogNameEdit({ catalog }: { catalog: ResourceCatalog }) {
+export default function CatalogEdit({ catalog }: { catalog: ResourceCatalog }) {
   const [draft, setDraft] = useState(catalog.name);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -33,7 +33,7 @@ export default function CatalogNameEdit({ catalog }: { catalog: ResourceCatalog 
   return (
     <input
       ref={inputRef}
-      className={styles.root}
+      className={styles.catalogEdit}
       type="text"
       value={draft}
       onChange={(event) => setDraft(event.target.value)}
