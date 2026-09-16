@@ -1,5 +1,6 @@
 import { shelfStore, uiStore } from '@/store';
 
+import { CSS } from '@dnd-kit/utilities';
 import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
 import { GripVertical } from 'lucide-react';
 import ResourceActions from './ResourceActions.tsx';
@@ -9,16 +10,30 @@ import { observer } from 'mobx-react-lite';
 import styles from './ResourceRow.module.scss';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useRef } from 'react';
+import { useSortable } from '@dnd-kit/sortable';
 
 export default observer(function ResourceRow({ resource }: { resource: WebResource }) {
   const editing = uiStore.editingResourceId === resource.id;
   const deleting = uiStore.deletingResource?.id === resource.id;
   const rootRef = useRef<HTMLDivElement>(null);
 
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: resource.id,
+    disabled: editing || deleting,
+  });
+
   useClickOutside(rootRef, () => deleting && uiStore.release());
 
   if (editing) {
-    return <ResourceEdit resource={resource} />;
+    return (
+      <div
+        ref={setNodeRef}
+        className={styles.resourceRow}
+        style={{ transform: CSS.Transform.toString(transform), transition }}
+      >
+        <ResourceEdit resource={resource} />
+      </div>
+    );
   }
 
   const title = resource.title?.trim() ?? '';
@@ -26,11 +41,26 @@ export default observer(function ResourceRow({ resource }: { resource: WebResour
 
   return (
     <div
-      ref={rootRef}
-      className={deleting ? `${styles.resourceRow} ${styles.armed}` : styles.resourceRow}
+      ref={(node) => {
+        rootRef.current = node;
+        setNodeRef(node);
+      }}
+      className={[
+        styles.resourceRow,
+        deleting ? styles.armed : null,
+        isDragging ? styles.dragging : null,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <div className={styles.body}>
-        <button type="button" className={styles.ico}>
+        <button
+          type="button"
+          className={`${styles.ico} ${styles.handle}`}
+          {...attributes}
+          {...listeners}
+        >
           <GripVertical size={16} />
         </button>
 

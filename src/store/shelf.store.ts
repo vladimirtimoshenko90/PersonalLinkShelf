@@ -162,6 +162,25 @@ export class ShelfStore {
     });
   }
 
+  reorderResources(catalogId: string, activeId: string, overId: string): void {
+    const sorted = this.resources
+      .filter((resource) => resource.catalogId === catalogId)
+      .slice()
+      .sort((left, right) => left.order - right.order);
+    const from = sorted.findIndex((resource) => resource.id === activeId);
+    const to = sorted.findIndex((resource) => resource.id === overId);
+    if (from < 0 || to < 0 || from === to) {
+      return;
+    }
+
+    const next = sorted.slice();
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved);
+    next.forEach((resource, index) => {
+      resource.order = index;
+    });
+  }
+
   private applyBlob(blob: ShelfBlob): void {
     this.catalogs = blob.catalogs;
     this.resources = blob.resources;
