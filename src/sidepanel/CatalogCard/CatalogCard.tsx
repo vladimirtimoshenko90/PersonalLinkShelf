@@ -3,12 +3,12 @@ import { shelfStore, uiStore } from '@/store';
 import { CSS } from '@dnd-kit/utilities';
 import CatalogActions from './CatalogActions/CatalogActions.tsx';
 import CatalogEdit from './CatalogEdit.tsx';
+import CatalogResources from './CatalogResources/CatalogResources.tsx';
 import CatalogView from './CatalogView.tsx';
 import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
 import { GripVertical } from 'lucide-react';
 import ResourceAdd from '../ResourceRow/ResourceEditors/ResourceAdd.tsx';
 import type { ResourceCatalog } from '@/database';
-import ResourceRow from '../ResourceRow/ResourceRow.tsx';
 import { observer } from 'mobx-react-lite';
 import styles from './CatalogCard.module.scss';
 import { useClickOutside } from '@/hooks/useClickOutside';
@@ -23,11 +23,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: catalog.id,
   });
-  const resources = shelfStore.resources
-    .filter((resource) => resource.catalogId === catalog.id)
-    .slice()
-    .sort((left, right) => left.order - right.order);
-  const count = resources.length;
+  const count = shelfStore.resources.filter((resource) => resource.catalogId === catalog.id).length;
 
   useClickOutside(rootRef, () => deleting && uiStore.release());
 
@@ -80,13 +76,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
 
       {!deleting && addingResource && <ResourceAdd catalog={catalog} />}
 
-      {!deleting && !catalog.collapsed && resources.length > 0 && (
-        <div className={styles.rows}>
-          {resources.map((resource) => (
-            <ResourceRow key={resource.id} resource={resource} />
-          ))}
-        </div>
-      )}
+      {!deleting && !catalog.collapsed && <CatalogResources catalog={catalog} />}
     </article>
   );
 });
