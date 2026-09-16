@@ -7,8 +7,6 @@ import CatalogNameEdit from '../CatalogNameEdit/CatalogNameEdit.tsx';
 import DeleteConfirm from '../DeleteConfirm/DeleteConfirm.tsx';
 import ResourceAdd from '../ResourceEditors/ResourceAdd.tsx';
 import type { ResourceCatalog } from '@/database';
-import ResourceDelete from '../ResourceDelete/ResourceDelete.tsx';
-import ResourceEdit from '../ResourceEditors/ResourceEdit.tsx';
 import ResourceRow from '../ResourceRow/ResourceRow.tsx';
 import { observer } from 'mobx-react-lite';
 import styles from './CatalogCard.module.scss';
@@ -88,19 +86,13 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
 
       {addingResource ? <ResourceAdd catalog={catalog} /> : null}
 
-      {!catalog.collapsed && resources.length > 0 ? (
+      {!catalog.collapsed && resources.length > 0 && (
         <div className={styles.rows}>
-          {resources.map((resource) => {
-            if (uiStore.deletingResource?.id === resource.id) {
-              return <ResourceDelete key={resource.id} />;
-            }
-            if (uiStore.editingResourceId === resource.id) {
-              return <ResourceEdit key={resource.id} resource={resource} />;
-            }
-            return <ResourceRow key={resource.id} resource={resource} />;
-          })}
+          {resources.map((resource) => (
+            <ResourceRow key={resource.id} resource={resource} />
+          ))}
         </div>
-      ) : null}
+      )}
     </article>
   );
 });

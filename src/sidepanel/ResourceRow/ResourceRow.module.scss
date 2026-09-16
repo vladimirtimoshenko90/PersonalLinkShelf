@@ -1,109 +1,126 @@
-.root {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  min-height: 36px;
+.resourceRow {
   margin: 0 4px;
-  padding: 2px 4px 2px 2px;
-  border-radius: 6px;
 
-  &:hover {
+  &.armed {
+    border: var(--hairline) solid color-mix(in srgb, var(--danger) 32%, var(--stroke));
+    border-radius: var(--radius);
     background: var(--hover);
-  }
 
-  &:hover,
-  &:focus-within {
-    .ico {
-      &.edit,
-      &.delete {
-        opacity: 1;
+    .body {
+      border-radius: var(--radius) var(--radius) 0 0;
+
+      &:hover {
+        background: none;
       }
     }
   }
 
-  .ico {
-    display: grid;
-    flex-shrink: 0;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    border: 0;
+  .body {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-height: 36px;
+    padding: 2px 4px 2px 2px;
     border-radius: 6px;
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
 
     &:hover {
       background: var(--hover);
     }
 
-    &:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 0;
-    }
-
-    &.edit,
-    &.delete {
-      opacity: 0;
-    }
-
-    &.delete {
-      &:hover {
-        color: var(--danger);
-      }
-    }
-  }
-
-  .copy {
-    display: flex;
-    flex: 1;
-    align-items: baseline;
-    gap: 6px;
-    min-width: 0;
-    overflow: hidden;
-    padding: 0 4px;
-
-    .title {
-      flex: 0 1 auto;
-      max-width: 58%;
-      min-width: 0;
-      overflow: hidden;
-      color: var(--fg);
-      font-size: var(--fs-body);
-      font-weight: var(--fw-body);
-      white-space: nowrap;
-      text-overflow: ellipsis;
-
-      &:only-child {
-        flex: 1;
-        max-width: none;
+    &:hover,
+    &:focus-within {
+      .ico {
+        &.edit,
+        &.delete {
+          opacity: 1;
+        }
       }
     }
 
-    .sep {
+    .ico {
+      display: grid;
       flex-shrink: 0;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
       color: var(--muted);
-      font-size: var(--fs-meta);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--hover);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 0;
+      }
+
+      &.edit,
+      &.delete {
+        opacity: 0;
+      }
+
+      &.delete {
+        &:hover {
+          color: var(--danger);
+        }
+      }
     }
 
-    .url {
-      flex: 1 1 0;
+    .copy {
+      display: flex;
+      flex: 1;
+      align-items: baseline;
+      gap: 6px;
       min-width: 0;
       overflow: hidden;
-      color: var(--muted);
-      font-size: var(--fs-meta);
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-  }
+      padding: 0 4px;
 
-  .mark {
-    display: grid;
-    flex-shrink: 0;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    color: var(--muted);
+      .title {
+        flex: 0 1 auto;
+        max-width: 58%;
+        min-width: 0;
+        overflow: hidden;
+        color: var(--fg);
+        font-size: var(--fs-body);
+        font-weight: var(--fw-body);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        &:only-child {
+          flex: 1;
+          max-width: none;
+        }
+      }
+
+      .sep {
+        flex-shrink: 0;
+        color: var(--muted);
+        font-size: var(--fs-meta);
+      }
+
+      .url {
+        flex: 1 1 0;
+        min-width: 0;
+        overflow: hidden;
+        color: var(--muted);
+        font-size: var(--fs-meta);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .mark {
+      display: grid;
+      flex-shrink: 0;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      color: var(--muted);
+    }
   }
 }

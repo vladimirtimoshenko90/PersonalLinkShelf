@@ -1,9 +1,8 @@
-.root {
-  margin: 0 4px 6px;
+.resourceDelete {
   padding: 8px 12px 12px;
-  border: var(--hairline) solid color-mix(in srgb, var(--danger) 32%, var(--stroke));
-  border-radius: var(--radius);
+  border-top: var(--hairline) solid var(--stroke);
   background: var(--hover);
+  border-radius: 0 0 var(--radius) var(--radius);
 
   .question {
     margin: 0 0 10px;
