@@ -1,4 +1,4 @@
-import { GripVertical, Link, Pencil, Trash2 } from 'lucide-react';
+import { GripVertical, Pencil, Trash2 } from 'lucide-react';
 import { shelfStore, uiStore } from '@/store';
 
 import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
@@ -52,11 +52,6 @@ export default observer(function ResourceRow({ resource }: { resource: WebResour
         >
           <Trash2 size={16} />
         </button>
-        {url !== '' && (
-          <span className={styles.mark}>
-            <Link size={16} />
-          </span>
-        )}
       </div>
 
       {deleting && (

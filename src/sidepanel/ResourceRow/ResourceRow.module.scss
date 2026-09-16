@@ -113,14 +113,5 @@
         text-overflow: ellipsis;
       }
     }
-
-    .mark {
-      display: grid;
-      flex-shrink: 0;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      color: var(--muted);
-    }
   }
 }
