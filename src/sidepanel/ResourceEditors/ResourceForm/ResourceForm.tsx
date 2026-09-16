@@ -1,13 +1,18 @@
 import { useRef, useState, type SubmitEvent } from 'react';
 
-import type { ResourceCatalog } from '@/database';
 import { useAutoFocus } from '@/hooks/useAutoFocus';
 import { useKeyPress } from '@/hooks/useKeyPress';
-import { shelfStore, uiStore } from '@/store';
-import styles from './ResourceAdd.module.scss';
+import { uiStore } from '@/store';
+import styles from './ResourceForm.module.scss';
 
-export default function ResourceAdd({ catalog }: { catalog: ResourceCatalog }) {
-  const [draft, setDraft] = useState({ title: '', url: '' });
+export default function ResourceForm({
+  initial,
+  onSave,
+}: {
+  initial: { title: string; url: string };
+  onSave: (title: string, url: string) => void;
+}) {
+  const [draft, setDraft] = useState(initial);
   const [error, setError] = useState<string | null>(null);
   const rootRef = useRef<HTMLFormElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
@@ -31,7 +36,7 @@ export default function ResourceAdd({ catalog }: { catalog: ResourceCatalog }) {
       setError('URL must start with https://');
       return;
     }
-    shelfStore.createResource(catalog.id, draft.title, draft.url);
+    onSave(draft.title, draft.url);
     uiStore.releaseCatalog();
   }
 
@@ -41,7 +46,7 @@ export default function ResourceAdd({ catalog }: { catalog: ResourceCatalog }) {
   }
 
   return (
-    <form ref={rootRef} className={styles.root} onSubmit={onSubmit}>
+    <form ref={rootRef} className={`${styles.resourceForm} resourceForm`} onSubmit={onSubmit}>
       <label className={styles.field}>
         Title
         <input
