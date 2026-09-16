@@ -11,10 +11,15 @@ import { useKeyPress } from '@/hooks/useKeyPress';
 export default observer(function CatalogActions({ catalog }: { catalog: ResourceCatalog }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const count = shelfStore.resources.filter((resource) => resource.catalogId === catalog.id).length;
-  const openAllDisabled = !shelfStore.resources.some(
-    (resource) => resource.catalogId === catalog.id && resource.url !== null && resource.url !== '',
-  );
+
+  const ofCatalog = shelfStore.resources.filter((resource) => resource.catalogId === catalog.id);
+  const count = ofCatalog.length;
+  const openableUrls = ofCatalog
+    .slice()
+    .sort((left, right) => left.order - right.order)
+    .map((resource) => resource.url?.trim() ?? '')
+    .filter((url) => url !== '');
+
   const Chevron = catalog.collapsed ? ChevronRight : ChevronDown;
 
   useClickOutside(wrapRef, () => setOpen(false));
@@ -38,6 +43,12 @@ export default observer(function CatalogActions({ catalog }: { catalog: Resource
     uiStore.startDeletingCatalog(catalog.id);
   }
 
+  function onOpenAll() {
+    for (const url of openableUrls) {
+      void chrome.tabs.create({ url });
+    }
+  }
+
   return (
     <div className={styles.catalogActions}>
       {count > 0 && (
@@ -53,9 +64,11 @@ export default observer(function CatalogActions({ catalog }: { catalog: Resource
         </>
       )}
 
-      <button type="button" className={styles.ico} disabled={openAllDisabled}>
-        <ExternalLink size={16} />
-      </button>
+      {openableUrls.length > 0 && (
+        <button type="button" className={styles.ico} onClick={onOpenAll}>
+          <ExternalLink size={16} />
+        </button>
+      )}
 
       <div ref={wrapRef} className={styles.menuWrap}>
         <button type="button" className={styles.ico} onClick={() => setOpen((value) => !value)}>
