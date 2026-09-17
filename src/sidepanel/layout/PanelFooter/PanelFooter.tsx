@@ -5,6 +5,8 @@ import { Download, Upload } from 'lucide-react';
 import type { CatalogKind } from '@/database';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useKeyPress } from '@/hooks/useKeyPress';
+import { shelfStore } from '@/store';
+import { exportShelf } from '@/utility/dataExport/exportShelf';
 import styles from './PanelFooter.module.scss';
 
 export default function PanelFooter({ onPickKind }: { onPickKind: (kind: CatalogKind) => void }) {
@@ -25,7 +27,12 @@ export default function PanelFooter({ onPickKind }: { onPickKind: (kind: Catalog
         <button type="button" className={styles.ico} title="Import from JSON">
           <Download size={16} />
         </button>
-        <button type="button" className={styles.ico} title="Export as JSON">
+        <button
+          type="button"
+          className={styles.ico}
+          title="Export data"
+          onClick={() => exportShelf(shelfStore.catalogs, shelfStore.resources)}
+        >
           <Upload size={16} />
         </button>
       </div>

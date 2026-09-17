@@ -3,7 +3,7 @@ import type { ResourceCatalog, ShelfBlob, WebResource } from './entities';
 export type { CatalogKind, ResourceCatalog, ShelfBlob, WebResource } from './entities';
 
 const STORAGE_KEY = 'CATALOGS_AND_RESOURCES';
-const SCHEMA_VERSION = 1 as const;
+export const DATA_SCHEMA_VERSION = 1 as const;
 
 export class Database {
   async get(): Promise<{ catalogs: ResourceCatalog[]; resources: WebResource[] }> {
@@ -12,7 +12,7 @@ export class Database {
     }>(STORAGE_KEY);
 
     const blob = stored[STORAGE_KEY] ?? {
-      schemaVersion: SCHEMA_VERSION,
+      schemaVersion: DATA_SCHEMA_VERSION,
       catalogs: [],
       resources: [],
     };
@@ -26,7 +26,7 @@ export class Database {
   async set(catalogs: ResourceCatalog[], resources: WebResource[]): Promise<void> {
     await chrome.storage.local.set({
       [STORAGE_KEY]: {
-        schemaVersion: SCHEMA_VERSION,
+        schemaVersion: DATA_SCHEMA_VERSION,
         catalogs: catalogs.map((catalog) => ({ ...catalog })),
         resources: resources.map((resource) => ({ ...resource })),
       },
