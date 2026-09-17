@@ -1,7 +1,7 @@
 import type { ResourceCatalog, WebResource } from '@/database';
 
-export interface ShelfExportModel {
-  schemaVersion: 1;
+export interface DataBackupModel {
+  schemaVersion: number;
   catalogs: ResourceCatalog[];
   resources: WebResource[];
 }
