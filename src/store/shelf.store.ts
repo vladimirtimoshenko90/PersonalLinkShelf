@@ -1,11 +1,7 @@
-import type { CatalogKind, ResourceCatalog, ShelfBlob, WebResource } from '@/database';
+import type { CatalogKind, ResourceCatalog, WebResource } from '@/database';
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 
 import { database } from '@/database';
-
-function blobSnapshot(catalogs: ResourceCatalog[], resources: WebResource[]): string {
-  return JSON.stringify({ catalogs, resources });
-}
 
 export class ShelfStore {
   catalogs: ResourceCatalog[] = [];
@@ -20,7 +16,7 @@ export class ShelfStore {
     });
 
     reaction(
-      () => blobSnapshot(this.catalogs, this.resources),
+      () => JSON.stringify({ catalogs: this.catalogs, resources: this.resources }),
       () => {
         if (!this.persistEnabled) {
           return;
@@ -38,9 +34,10 @@ export class ShelfStore {
       this.started = true;
     });
 
-    const blob = await database.get();
+    const { catalogs, resources } = await database.get();
     runInAction(() => {
-      this.applyBlob(blob);
+      this.catalogs = catalogs;
+      this.resources = resources;
     });
     runInAction(() => {
       this.persistEnabled = true;
@@ -181,17 +178,8 @@ export class ShelfStore {
     });
   }
 
-  private applyBlob(blob: ShelfBlob): void {
-    this.catalogs = blob.catalogs;
-    this.resources = blob.resources;
-  }
-
   private async persist(): Promise<void> {
-    await database.set({
-      schemaVersion: 1,
-      catalogs: this.catalogs,
-      resources: this.resources,
-    });
+    await database.set(this.catalogs, this.resources);
   }
 }
 

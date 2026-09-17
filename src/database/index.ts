@@ -1,30 +1,34 @@
-import type { ShelfBlob } from './entities';
+import type { ResourceCatalog, ShelfBlob, WebResource } from './entities';
 
 export type { CatalogKind, ResourceCatalog, ShelfBlob, WebResource } from './entities';
 
 const STORAGE_KEY = 'CATALOGS_AND_RESOURCES';
+const SCHEMA_VERSION = 1 as const;
 
 export class Database {
-  async get(): Promise<ShelfBlob> {
+  async get(): Promise<{ catalogs: ResourceCatalog[]; resources: WebResource[] }> {
     const stored = await chrome.storage.local.get<{
       [STORAGE_KEY]?: ShelfBlob;
     }>(STORAGE_KEY);
 
-    return (
-      stored[STORAGE_KEY] ?? {
-        schemaVersion: 1,
-        catalogs: [],
-        resources: [],
-      }
-    );
+    const blob = stored[STORAGE_KEY] ?? {
+      schemaVersion: SCHEMA_VERSION,
+      catalogs: [],
+      resources: [],
+    };
+
+    return {
+      catalogs: blob.catalogs,
+      resources: blob.resources,
+    };
   }
 
-  async set(blob: ShelfBlob): Promise<void> {
+  async set(catalogs: ResourceCatalog[], resources: WebResource[]): Promise<void> {
     await chrome.storage.local.set({
       [STORAGE_KEY]: {
-        schemaVersion: 1,
-        catalogs: blob.catalogs.map((catalog) => ({ ...catalog })),
-        resources: blob.resources.map((resource) => ({ ...resource })),
+        schemaVersion: SCHEMA_VERSION,
+        catalogs: catalogs.map((catalog) => ({ ...catalog })),
+        resources: resources.map((resource) => ({ ...resource })),
       },
     });
   }
