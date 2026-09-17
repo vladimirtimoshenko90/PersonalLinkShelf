@@ -13,6 +13,7 @@ export class ShelfStore {
   constructor() {
     makeAutoObservable(this, {
       start: false,
+      reload: false,
     });
 
     reaction(
@@ -40,6 +41,16 @@ export class ShelfStore {
       this.resources = resources;
     });
     runInAction(() => {
+      this.persistEnabled = true;
+    });
+  }
+
+  async reload(): Promise<void> {
+    const { catalogs, resources } = await database.get();
+    runInAction(() => {
+      this.persistEnabled = false;
+      this.catalogs = catalogs;
+      this.resources = resources;
       this.persistEnabled = true;
     });
   }
