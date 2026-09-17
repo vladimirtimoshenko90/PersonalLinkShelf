@@ -20,8 +20,6 @@ export default observer(function CatalogActions({ catalog }: { catalog: Resource
     .map((resource) => resource.url?.trim() ?? '')
     .filter((url) => url !== '');
 
-  const Chevron = catalog.collapsed ? ChevronRight : ChevronDown;
-
   useClickOutside(wrapRef, () => setOpen(false));
   useKeyPress(document, 'Escape', () => setOpen(false));
 
@@ -59,7 +57,7 @@ export default observer(function CatalogActions({ catalog }: { catalog: Resource
             className={styles.ico}
             onClick={() => shelfStore.toggleCatalogCollapsed(catalog.id)}
           >
-            <Chevron size={16} />
+            {catalog.collapsed ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
           </button>
         </>
       )}

@@ -20,6 +20,7 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
   const deleting = uiStore.deletingCatalogId === catalog.id;
   const addingResource = uiStore.addingResourceCatalogId === catalog.id;
   const rootRef = useRef<HTMLElement>(null);
+
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: catalog.id,
   });
@@ -27,21 +28,19 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
 
   useClickOutside(rootRef, () => deleting && uiStore.release());
 
-  const rootClass = [
-    styles.root,
-    deleting ? styles.armed : null,
-    isDragging ? styles.dragging : null,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
   return (
     <article
       ref={(node) => {
         rootRef.current = node;
         setNodeRef(node);
       }}
-      className={rootClass}
+      className={[
+        styles.catalogCard,
+        deleting ? styles.armed : null,
+        isDragging ? styles.dragging : null,
+      ]
+        .filter(Boolean)
+        .join(' ')}
       style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <div className={styles.head}>
