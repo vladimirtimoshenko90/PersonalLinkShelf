@@ -2,7 +2,6 @@
   margin: 0 4px;
 
   &.armed {
-    border: var(--hairline) solid color-mix(in srgb, var(--danger) 32%, var(--stroke));
     border-radius: var(--radius);
     background: var(--hover);
 

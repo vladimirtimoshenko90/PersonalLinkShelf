@@ -5,8 +5,6 @@
   background: var(--bg);
 
   &.armed {
-    border-color: color-mix(in srgb, var(--danger) 32%, var(--stroke));
-
     .head {
       background: var(--hover);
       border-radius: var(--radius) var(--radius) 0 0;

@@ -8,7 +8,7 @@
     margin: 0 0 10px;
     color: var(--fg);
     font-size: var(--fs-body);
-    font-weight: var(--fw-title);
+    font-weight: 400;
     letter-spacing: -0.01em;
     line-height: 1.35;
   }
@@ -16,7 +16,7 @@
   .actions {
     display: flex;
     justify-content: flex-end;
-    gap: 8px;
+    gap: 4px;
 
     .cancel {
       padding: 6px 10px;
@@ -25,6 +25,7 @@
       background: none;
       color: var(--muted);
       font-size: var(--fs-body);
+      font-weight: 400;
       cursor: pointer;
 
       &:hover {
@@ -39,17 +40,17 @@
     }
 
     .delete {
-      padding: 6px 12px;
-      border: 0;
-      border-radius: var(--radius);
-      background: var(--danger);
-      color: var(--on-accent);
+      padding: 8px 12px;
+      border: 1px solid var(--fg);
+      border-radius: 2px;
+      background: transparent;
+      color: var(--fg);
       font-size: var(--fs-body);
-      font-weight: var(--fw-title);
+      font-weight: 400;
       cursor: pointer;
 
       &:hover {
-        background: color-mix(in srgb, var(--danger) 88%, var(--fg));
+        background: var(--bg);
       }
 
       &:focus-visible {
