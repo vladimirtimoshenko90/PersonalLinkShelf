@@ -1,8 +1,9 @@
 import { DATA_SCHEMA_VERSION, database } from '@/database';
-import { shelfStore } from '@/store';
-import { FileUtility } from '@/utility/fileUtility';
 
 import type { DataBackupModel } from './data-backup-model';
+import { FileUtility } from '@/utility/fileUtility';
+import { mergeDataBackup } from './mergeDataBackup';
+import { shelfStore } from '@/store';
 
 const EXPORT_FILENAME = 'personal-link-shelf.json';
 
@@ -28,14 +29,12 @@ export class BackupService {
     const file = await FileUtility.pickJsonFile();
     if (!file) return;
 
-    const data = JSON.parse(await file.text()) as DataBackupModel;
+    const data_incoming = JSON.parse(await file.text()) as DataBackupModel;
     // NOTE: potentially data schema migration could be needed here
 
-    const current = await database.get();
-    await database.set(
-      [...current.catalogs, ...data.catalogs],
-      [...current.resources, ...data.resources],
-    );
+    const data_existing = await database.get();
+    const data_merged = mergeDataBackup(data_existing, data_incoming);
+    await database.set(data_merged.catalogs, data_merged.resources);
 
     await shelfStore.reload();
   }
