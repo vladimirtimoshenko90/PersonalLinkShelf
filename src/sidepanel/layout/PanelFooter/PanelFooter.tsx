@@ -3,12 +3,11 @@ import { useRef, useState, type ChangeEvent } from 'react';
 import { Download, Upload } from 'lucide-react';
 
 import type { CatalogKind } from '@/database';
-import { useClickOutside } from '@/utility/hooks/useClickOutside';
-import { useKeyPress } from '@/utility/hooks/useKeyPress';
-import { shelfStore } from '@/store';
 import { exportShelf } from '@/utility/dataExport/exportShelf';
 import { importShelf } from '@/utility/dataExport/importShelf';
 import type { ShelfExportModel } from '@/utility/dataExport/shelf-export-model';
+import { useClickOutside } from '@/utility/hooks/useClickOutside';
+import { useKeyPress } from '@/utility/hooks/useKeyPress';
 import styles from './PanelFooter.module.scss';
 
 export default function PanelFooter({ onPickKind }: { onPickKind: (kind: CatalogKind) => void }) {
@@ -55,7 +54,7 @@ export default function PanelFooter({ onPickKind }: { onPickKind: (kind: Catalog
           type="button"
           className={styles.ico}
           title="Export data"
-          onClick={() => exportShelf(shelfStore.catalogs, shelfStore.resources)}
+          onClick={() => void exportShelf()}
         >
           <Upload size={16} />
         </button>

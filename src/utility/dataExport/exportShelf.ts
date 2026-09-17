@@ -1,11 +1,11 @@
-import type { ResourceCatalog, WebResource } from '@/database';
-import { DATA_SCHEMA_VERSION } from '@/database';
+import { DATA_SCHEMA_VERSION, database } from '@/database';
 
 import type { ShelfExportModel } from './shelf-export-model';
 
 const EXPORT_FILENAME = 'personal-link-shelf.json';
 
-export function exportShelf(catalogs: ResourceCatalog[], resources: WebResource[]): void {
+export async function exportShelf(): Promise<void> {
+  const { catalogs, resources } = await database.get();
   const payload: ShelfExportModel = {
     schemaVersion: DATA_SCHEMA_VERSION,
     catalogs,
