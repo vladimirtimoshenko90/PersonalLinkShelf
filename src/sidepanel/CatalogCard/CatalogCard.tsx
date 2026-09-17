@@ -1,3 +1,4 @@
+import { ChevronDown, ChevronRight, GripVertical } from 'lucide-react';
 import { shelfStore, uiStore } from '@/store';
 
 import { CSS } from '@dnd-kit/utilities';
@@ -6,7 +7,6 @@ import CatalogEdit from './CatalogEdit.tsx';
 import CatalogResources from './CatalogResources/CatalogResources.tsx';
 import CatalogView from './CatalogView.tsx';
 import DeleteConfirm from '../components/DeleteConfirm/DeleteConfirm.tsx';
-import { GripVertical } from 'lucide-react';
 import ResourceAdd from '../ResourceRow/ResourceEditors/ResourceAdd.tsx';
 import type { ResourceCatalog } from '@/database';
 import { observer } from 'mobx-react-lite';
@@ -52,6 +52,16 @@ export default observer(function CatalogCard({ catalog }: { catalog: ResourceCat
         >
           <GripVertical size={16} />
         </button>
+
+        {!deleting && count > 0 && (
+          <button
+            type="button"
+            className={styles.ico}
+            onClick={() => shelfStore.toggleCatalogCollapsed(catalog.id)}
+          >
+            {catalog.collapsed ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
+          </button>
+        )}
 
         {editing ? <CatalogEdit catalog={catalog} /> : <CatalogView catalog={catalog} />}
 

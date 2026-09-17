@@ -25,8 +25,13 @@
     min-height: 40px;
     padding: 4px 4px 4px 2px;
 
-    &:hover {
+    &:hover,
+    &:focus-within {
       background: var(--hover);
+
+      :global(.catHover) {
+        display: flex;
+      }
     }
 
     .ico {
@@ -47,6 +52,7 @@
 
       &:hover:not(:disabled) {
         background: var(--hover);
+        color: var(--fg);
       }
 
       &:focus-visible {

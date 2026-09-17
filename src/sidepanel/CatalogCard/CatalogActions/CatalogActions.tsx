@@ -1,91 +1,57 @@
-import { ChevronDown, ChevronRight, ExternalLink, MoreHorizontal } from 'lucide-react';
+import { ExternalLink, Pencil, Plus, Trash2 } from 'lucide-react';
 import { shelfStore, uiStore } from '@/store';
-import { useRef, useState, type MouseEvent } from 'react';
 
 import type { ResourceCatalog } from '@/database';
 import { observer } from 'mobx-react-lite';
 import styles from './CatalogActions.module.scss';
-import { useClickOutside } from '@/hooks/useClickOutside';
-import { useKeyPress } from '@/hooks/useKeyPress';
 
 export default observer(function CatalogActions({ catalog }: { catalog: ResourceCatalog }) {
-  const [open, setOpen] = useState(false);
-  const wrapRef = useRef<HTMLDivElement>(null);
-
-  const ofCatalog = shelfStore.resources.filter((resource) => resource.catalogId === catalog.id);
-  const count = ofCatalog.length;
-  const openableUrls = ofCatalog
+  const openableUrls = shelfStore.resources
+    .filter((resource) => resource.catalogId === catalog.id)
     .slice()
     .sort((left, right) => left.order - right.order)
     .map((resource) => resource.url?.trim() ?? '')
     .filter((url) => url !== '');
 
-  useClickOutside(wrapRef, () => setOpen(false));
-  useKeyPress(document, 'Escape', () => setOpen(false));
-
-  function onAdd(event: MouseEvent<HTMLButtonElement>) {
-    event.stopPropagation();
-    setOpen(false);
-    uiStore.startAddingResource(catalog.id);
-  }
-
-  function onRename(event: MouseEvent<HTMLButtonElement>) {
-    event.stopPropagation();
-    setOpen(false);
-    uiStore.startEditingCatalog(catalog.id);
-  }
-
-  function onDelete(event: MouseEvent<HTMLButtonElement>) {
-    event.stopPropagation();
-    setOpen(false);
-    uiStore.startDeletingCatalog(catalog.id);
-  }
-
-  function onOpenAll() {
-    for (const url of openableUrls) {
-      void chrome.tabs.create({ url });
-    }
-  }
-
   return (
     <div className={styles.catalogActions}>
-      {count > 0 && (
-        <>
-          <span className={styles.count}>{count}</span>
-          <button
-            type="button"
-            className={styles.ico}
-            onClick={() => shelfStore.toggleCatalogCollapsed(catalog.id)}
-          >
-            {catalog.collapsed ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
-          </button>
-        </>
-      )}
+      <span className={`catHover ${styles.hover}`}>
+        <button
+          type="button"
+          className={styles.ico}
+          onClick={() => uiStore.startAddingResource(catalog.id)}
+        >
+          <Plus size={16} />
+        </button>
+        <button
+          type="button"
+          className={styles.ico}
+          onClick={() => uiStore.startEditingCatalog(catalog.id)}
+        >
+          <Pencil size={16} />
+        </button>
+        <button
+          type="button"
+          className={`${styles.ico} ${styles.kill}`}
+          onClick={() => uiStore.startDeletingCatalog(catalog.id)}
+        >
+          <Trash2 size={16} />
+        </button>
+      </span>
 
       {openableUrls.length > 0 && (
-        <button type="button" className={styles.ico} onClick={onOpenAll}>
+        <button
+          type="button"
+          className={styles.ico}
+          onClick={() => {
+            for (const url of openableUrls) {
+              void chrome.tabs.create({ url });
+            }
+          }}
+        >
           <ExternalLink size={16} />
         </button>
       )}
-
-      <div ref={wrapRef} className={styles.menuWrap}>
-        <button type="button" className={styles.ico} onClick={() => setOpen((value) => !value)}>
-          <MoreHorizontal size={16} />
-        </button>
-        {open && (
-          <div className={styles.menu}>
-            <button type="button" onClick={onAdd}>
-              Add
-            </button>
-            <button type="button" onClick={onRename}>
-              Rename
-            </button>
-            <button type="button" className={styles.delete} onClick={onDelete}>
-              Delete
-            </button>
-          </div>
-        )}
-      </div>
     </div>
   );
 });
