@@ -3,8 +3,8 @@ import { useRef, useState, type ChangeEvent } from 'react';
 import { Download, Upload } from 'lucide-react';
 
 import type { CatalogKind } from '@/database';
-import { useClickOutside } from '@/hooks/useClickOutside';
-import { useKeyPress } from '@/hooks/useKeyPress';
+import { useClickOutside } from '@/utility/hooks/useClickOutside';
+import { useKeyPress } from '@/utility/hooks/useKeyPress';
 import { shelfStore } from '@/store';
 import { exportShelf } from '@/utility/dataExport/exportShelf';
 import { importShelf } from '@/utility/dataExport/importShelf';

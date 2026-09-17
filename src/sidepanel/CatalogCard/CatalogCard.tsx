@@ -11,7 +11,7 @@ import ResourceAdd from '../ResourceRow/ResourceEditors/ResourceAdd.tsx';
 import type { ResourceCatalog } from '@/database';
 import { observer } from 'mobx-react-lite';
 import styles from './CatalogCard.module.scss';
-import { useClickOutside } from '@/hooks/useClickOutside';
+import { useClickOutside } from '@/utility/hooks/useClickOutside';
 import { useRef } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 

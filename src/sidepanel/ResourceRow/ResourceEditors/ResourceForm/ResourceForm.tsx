@@ -1,7 +1,7 @@
 import { useRef, useState, type SubmitEvent } from 'react';
 
-import { useAutoFocus } from '@/hooks/useAutoFocus';
-import { useKeyPress } from '@/hooks/useKeyPress';
+import { useAutoFocus } from '@/utility/hooks/useAutoFocus';
+import { useKeyPress } from '@/utility/hooks/useKeyPress';
 import { uiStore } from '@/store';
 import styles from './ResourceForm.module.scss';
 import { readActiveTab, tabCaptureHint } from './tabCapture.ts';

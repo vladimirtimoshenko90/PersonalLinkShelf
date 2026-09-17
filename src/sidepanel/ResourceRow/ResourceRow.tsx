@@ -8,7 +8,7 @@ import ResourceEdit from './ResourceEditors/ResourceEdit.tsx';
 import type { WebResource } from '@/database';
 import { observer } from 'mobx-react-lite';
 import styles from './ResourceRow.module.scss';
-import { useClickOutside } from '@/hooks/useClickOutside';
+import { useClickOutside } from '@/utility/hooks/useClickOutside';
 import { useRef } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 

@@ -3,9 +3,9 @@ import { useRef, useState } from 'react';
 import type { CatalogKind } from '@/database';
 import { shelfStore } from '@/store';
 import styles from './CatalogDraft.module.scss';
-import { useAutoFocus } from '@/hooks/useAutoFocus';
-import { useBlur } from '@/hooks/useBlur';
-import { useKeyPress } from '@/hooks/useKeyPress';
+import { useAutoFocus } from '@/utility/hooks/useAutoFocus';
+import { useBlur } from '@/utility/hooks/useBlur';
+import { useKeyPress } from '@/utility/hooks/useKeyPress';
 
 export default function CatalogDraft({ kind, onDone }: { kind: CatalogKind; onDone: () => void }) {
   const [name, setName] = useState('');
