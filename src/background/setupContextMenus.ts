@@ -78,6 +78,11 @@ async function savePageToCatalog(catalogId: string): Promise<void> {
     createdAt: Date.now(),
   });
   await database.set(catalogs, resources);
+
+  const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+  if (tab?.windowId !== undefined) {
+    await chrome.sidePanel.open({ windowId: tab.windowId });
+  }
 }
 
 export function setupContextMenus(): void {
