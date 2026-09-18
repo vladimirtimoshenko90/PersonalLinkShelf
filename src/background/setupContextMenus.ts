@@ -65,6 +65,11 @@ async function savePageToCatalog(catalogId: string): Promise<void> {
     return;
   }
 
+  const alreadySaved = resources.some(
+    (r) => r.catalogId === catalogId && r.title === title && r.url === url,
+  );
+  if (alreadySaved) return;
+
   const ofCatalog = resources.filter((resource) => resource.catalogId === catalogId);
   const order = ofCatalog.reduce((min, resource) => Math.min(min, resource.order), 1) - 1;
 
