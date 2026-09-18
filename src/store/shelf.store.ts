@@ -43,6 +43,8 @@ export class ShelfStore {
     runInAction(() => {
       this.persistEnabled = true;
     });
+
+    database.onChange(() => void this.reload());
   }
 
   async reload(): Promise<void> {

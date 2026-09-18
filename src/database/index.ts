@@ -32,6 +32,21 @@ export class Database {
       },
     });
   }
+
+  onChange(listener: () => void): () => void {
+    const handler = (
+      changes: { [key: string]: chrome.storage.StorageChange },
+      areaName: string,
+    ) => {
+      if (areaName !== 'local' || !changes[STORAGE_KEY]) {
+        return;
+      }
+      listener();
+    };
+
+    chrome.storage.onChanged.addListener(handler);
+    return () => chrome.storage.onChanged.removeListener(handler);
+  }
 }
 
 export const database = new Database();

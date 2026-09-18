@@ -83,9 +83,7 @@ async function savePageToCatalog(catalogId: string): Promise<void> {
 export function setupContextMenus(): void {
   void syncContextMenus();
 
-  chrome.storage.onChanged.addListener((_changes, areaName) => {
-    areaName === 'local' && syncContextMenus();
-  });
+  database.onChange(() => void syncContextMenus());
 
   chrome.contextMenus.onClicked.addListener((info) => {
     const menuItemId = String(info.menuItemId);
