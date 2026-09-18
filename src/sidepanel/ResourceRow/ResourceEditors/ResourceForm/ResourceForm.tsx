@@ -1,10 +1,10 @@
 import { useRef, useState, type SubmitEvent } from 'react';
 
+import { uiStore } from '@/store';
 import { useAutoFocus } from '@/utility/hooks/useAutoFocus';
 import { useKeyPress } from '@/utility/hooks/useKeyPress';
-import { uiStore } from '@/store';
+import { readActiveTab } from '@/utility/tab.utility';
 import styles from './ResourceForm.module.scss';
-import { readActiveTab, tabCaptureHint } from './tabCapture.ts';
 
 export default function ResourceForm({
   initial,
@@ -49,14 +49,13 @@ export default function ResourceForm({
   }
 
   async function onThisTab() {
-    const tab = await readActiveTab();
-    const hint = tabCaptureHint(tab?.url);
-    if (hint !== null || tab === null) {
-      setError(hint ?? "Can't use this page.");
+    const { done, title, url, reason } = await readActiveTab();
+    if (!done) {
+      setError(reason ?? "Can't use this page.");
       return;
     }
     setError(null);
-    setDraft({ title: tab.title, url: tab.url });
+    setDraft({ title: title ?? '', url: url ?? '' });
   }
 
   return (
