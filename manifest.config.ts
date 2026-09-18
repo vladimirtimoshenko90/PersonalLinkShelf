@@ -20,7 +20,7 @@ export default defineManifest({
       128: 'public/icons/icon-128.png',
     },
   },
-  permissions: ['sidePanel', 'storage', 'tabs'],
+  permissions: ['contextMenus', 'sidePanel', 'storage', 'tabs'],
   background: {
     service_worker: 'src/background/index.ts',
     type: 'module',
